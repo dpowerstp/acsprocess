@@ -2,8 +2,8 @@ Package: acsprocess
 Title: Process tidycensus downloaded ACS data
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = Dan,
-           family = Powers,
+    person(given = "Dan",
+           family = "Powers",
            role = c("aut", "cre"),
            email = "danielp@takomaparkmd.gov",
            comment = c(ORCID = "YOUR-ORCID-ID"))
