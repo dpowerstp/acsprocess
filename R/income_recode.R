@@ -23,9 +23,9 @@ income_recode <- function(df, income_col, new_income = "income_recode", rent_own
   }
 
   df <- df %>%
-    mutate(!!sym(new_income) := change_income({{income_col}}))
+    dplyr::mutate(!!sym(new_income) := change_income({{income_col}}))
 
-  factor_vector <- pull(df, !!sym(new_income)) %>% unique
+  factor_vector <- dplyr::pull(df, !!sym(new_income)) %>% unique
 
   factor_vector_big <- grep(">", factor_vector, value = T)
   factor_vector_small <- grep("<", factor_vector, value = T)

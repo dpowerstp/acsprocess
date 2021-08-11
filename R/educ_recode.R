@@ -25,7 +25,7 @@ educ_recode <- function(df, educ_col, new_educ = "educ_recode"){
   }
 
   educ_change <- function(string){
-    case_when(grepl("Less than", string, ignore.case = T) ~ vec_order[1],
+    dplyr::case_when(grepl("Less than", string, ignore.case = T) ~ vec_order[1],
               grepl("equivalency", string, ignore.case = T) ~ vec_order[2],
               grepl("Some college", string, ignore.case = T) ~ vec_order[3],
               grepl("Bachelor's", string, ignore.case = T) ~ vec_order[4],

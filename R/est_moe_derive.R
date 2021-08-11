@@ -22,7 +22,7 @@ est_moe_derive <- function(df, group_cols, est_col = "estimate", moe_col = "moe"
   }
 
   df %>%
-    dplyr::group_by(across(group_cols)) %>%
+    dplyr::group_by(dplyr::across(group_cols)) %>%
     dplyr::mutate(!!sym(name_col_est) := sum(!!sym(est_col)),
            !!sym(name_col_moe) := sum((!!sym(moe_col))^2)) %>%
     dplyr::ungroup() %>%
