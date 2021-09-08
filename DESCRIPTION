@@ -1,6 +1,6 @@
 Package: acsprocess
 Title: Process tidycensus downloaded ACS data
-Version: 0.0.0.9000
+Version: 0.0.1.0000
 Authors@R: 
     person(given = "Dan",
            family = "Powers",
@@ -17,8 +17,11 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     dplyr,
+    glue,
     purrr,
+    stringr,
     tidycensus,
-    tidyr
+    tidyr,
+    tpfuncts
 Depends: 
     tidyverse

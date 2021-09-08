@@ -1,3 +1,5 @@
+^renv$
+^renv\.lock$
 ^acsprocess\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$

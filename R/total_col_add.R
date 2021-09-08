@@ -53,7 +53,7 @@ total_col_add <- function(df,
 
     # join total data to df and filter out total-row
     return_df <<- return_df %>%
-      left_join(total_df) %>%
+      dplyr::left_join(total_df) %>%
       dplyr::filter(!is.na(!!sym(select_tot_col)))
 
   })
@@ -62,9 +62,9 @@ total_col_add <- function(df,
 
   df_check <- return_df %>%
     dplyr::group_by(dplyr::across(group_vec)) %>%
-    dplyr::mutate(freq = n())
+    dplyr::mutate(freq = dplyr::n())
 
-  if (any(df_check %>% pull(freq) > 1) | nrow(df_check) > nrow(df)){
+  if (any(df_check %>% dplyr::pull(freq) > 1) | nrow(df_check) > nrow(df)){
     browser()
 
     stop("Observations that are supposed to be unique repeat; check whether join columns and total columns align")
