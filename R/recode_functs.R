@@ -532,3 +532,92 @@ income_recode <- function(df, income_col, new_income = "income_recode", rent_own
   df
 
 }
+
+
+#' Recode education values
+#'
+#' A function to recode tidycensus education columns to a shorter string for graphing purposes
+#'
+#' @param df A tidycensus dataframe with an education column
+#' @param educ_col The column name of  to the education column in the tidycensus dataframe
+#' @param new_educ The name of the new column containing the recoded education values; by edfault, educ_recode
+#'
+#' @return A dataframe with a recoded education column with shorter names
+#' @export
+#'
+#' @examples
+educ_recode <- function(df, educ_col, new_educ = "educ_recode"){
+
+  vec_order <- c("Less than HS",
+                 "HS graduate",
+                 "Associate's/some college")
+
+  if (any(grepl("Professional", dplyr::pull(df, {{ educ_col }}), ignore.case = T))) {
+    vec_order <- c(vec_order, "Bachelor's degree", "Graduate degree")
+  }
+
+  else {
+    vec_order <- c(vec_order, "Bachelor's or higher")
+  }
+
+  educ_change <- function(string){
+    dplyr::case_when(grepl("Less than", string, ignore.case = T) ~ vec_order[1],
+                     grepl("equivalency", string, ignore.case = T) ~ vec_order[2],
+                     grepl("Some college", string, ignore.case = T) ~ vec_order[3],
+                     grepl("Bachelor's", string, ignore.case = T) ~ vec_order[4],
+                     grepl("Graduate", string, ignore.case = T) ~ vec_order[5],
+                     TRUE ~ "Missing")
+  }
+
+  return <- df %>%
+    dplyr::mutate(!!sym(new_educ) := factor(educ_change({{educ_col}}), vec_order, vec_order))
+
+  if (any(return[[new_educ]] == "Missing")){
+    stop("Error; returned missing education values")
+  }
+
+  return(return)
+}
+
+#' Recode ACS computer/internet access variables
+#'
+#' Function to recode tidycensus ACS dataset with a column for computer access and a column for internet access to one column with shortened descriptors.
+#'
+#' @param df A tidycensus ACS dataset with a column for computer access and one for internet access.
+#' @param comp_col The name of the computer access column.
+#' @param int_col The name of the internet accesss column.
+#' @param new_comp The name of the new column
+#'
+#' @return A tidycensus ACS dataset with a factor-ordered computer/internet access column
+#' @export
+#'
+#' @examples
+comp_recode <- function(df, comp_col, int_col, new_comp = "comp_int"){
+  comp_order <- c("Broadband internet",
+                  "Dial-up internet",
+                  "No internet",
+                  "No computer")
+
+  comp_change <- function(string_comp, string_int){
+
+    comp_int <- ifelse(!grepl("No", string_comp), paste0(string_comp, " ", string_int), comp_order[4])
+
+    comp_int <- dplyr::case_when(grepl("Without an Internet", comp_int) ~ comp_order[3],
+                                 grepl("dial-up", comp_int) ~ comp_order[2],
+                                 grepl("broadband", comp_int) ~ comp_order[1],
+                                 TRUE ~ comp_int)
+
+    return(comp_int)
+  }
+
+  return <- df %>%
+    dplyr::mutate(!!sym(new_comp) := comp_change({{ comp_col }}, {{ int_col }}),
+                  !!sym(new_comp) := factor(!!sym(new_comp), comp_order, comp_order))
+
+  if (any(is.na(return[[new_comp]]))){
+    stop("Error; missing values in return dataset")
+  }
+
+  return(return)
+
+}
