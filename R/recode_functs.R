@@ -121,7 +121,7 @@ age_recode <- function(df, age_col, regroup = "decennial") {
 
   # reorder so 1) less than 2) signle digits 3) age vector order, and then check if overall value present and put last if so
   age_vec_order <- c(less_age, single_dig, age_vec_order[!age_vec_order %in% c(single_dig, less_age)]) %>%
-    acsprocess::overall_check
+    acsprocess::overall_check()
 
   # create factor of age vector
   df <- df %>%
