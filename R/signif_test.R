@@ -138,7 +138,7 @@ signif_overall <- function(processed_df,
                            bind_overall = NULL){
 
   overall_df <- root_df %>%
-    dplyr::ungroup %>%
+    dplyr::ungroup() %>%
     # calculate overall results for all groups but last group
     acsprocess::est_moe_derive(group_cols = group_cols[1:(length(group_cols)-1)],
                    name_col = "pop_total") %>%
@@ -159,7 +159,7 @@ signif_overall <- function(processed_df,
 
   # join and calculate significance
   return_df <- processed_df %>%
-    dplyr::ungroup %>%
+    dplyr::ungroup() %>%
     dplyr::left_join(overall_df_join) %>%
     dplyr::mutate(crit_overall = acsprocess::signif_test(est1 = {{ est_col }},
                                       est2 = pct_overall,
@@ -179,7 +179,7 @@ signif_overall <- function(processed_df,
 
     # browser()
     overall_df_bind <- overall_df %>%
-      dplyr::ungroup %>%
+      dplyr::ungroup() %>%
       dplyr::mutate(!!sym(bind_overall) := "Overall") %>%
       dplyr::select(group_cols, bind_overall, pct_overall, pct_moe) %>%
       dplyr::rename({{ est_col }} := pct_overall,
