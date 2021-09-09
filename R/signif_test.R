@@ -86,7 +86,7 @@ signif_compare <- function(df,
 
   filter_df <- filter_df %>%
     dplyr::select({{join_col}}, {{ est_col }}, {{ moe_col }}) %>%
-    dplyr::distinct %>%
+    dplyr::distinct() %>%
     dplyr::rename(!!sym(est_filter) := {{ est_col }},
            !!sym(moe_filter) := {{ moe_col }})
 
