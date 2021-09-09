@@ -86,7 +86,7 @@ signif_compare <- function(df,
 
   filter_df <- filter_df %>%
     dplyr::select({{join_col}}, {{ est_col }}, {{ moe_col }}) %>%
-    dplyr::distinct %>%
+    dplyr::distinct() %>%
     dplyr::rename(!!sym(est_filter) := {{ est_col }},
            !!sym(moe_filter) := {{ moe_col }})
 
@@ -145,7 +145,7 @@ signif_overall <- function(processed_df,
     acsprocess::est_moe_derive(group_cols = group_cols,
                    name_col = "overall") %>%
     dplyr::select(group_cols, pop_total_est, pop_total_moe, overall_est, overall_moe) %>%
-    dplyr::distinct %>%
+    dplyr::distinct() %>%
     acsprocess::derive_pct_est_moe("pct_overall",
                        "pop_total_est",
                        "pop_total_moe",
