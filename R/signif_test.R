@@ -74,7 +74,7 @@ signif_compare <- function(df,
   # create dataframe of values to compare original df values against
   filter_df <- df %>%
     # ungroup data in case grouped
-    dplyr::ungroup %>%
+    dplyr::ungroup() %>%
     dplyr::filter(grepl(filter_val, {{ filter_col }}, ignore.case = T))
 
   if ((filter_df %>%
