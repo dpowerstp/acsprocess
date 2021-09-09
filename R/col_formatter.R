@@ -10,8 +10,8 @@ col_formatter <- function(df){
 
   df %>%
     # filter(!!sym(col_name) != "White alone") %>%
-    dplyr::mutate(dplyr::across(dplyr::where(is.character), ~ gsub(":", "", .x)),
-                  dplyr::across(dplyr::where(is.character), ~ gsub(" alone", "", .x)),
-                  dplyr::across(dplyr::where(is.character), ~ gsub(" or ", "/", .x)))
+    dplyr::mutate(dplyr::across(where(is.character), ~ gsub(":", "", .x)),
+                  dplyr::across(where(is.character), ~ gsub(" alone", "", .x)),
+                  dplyr::across(where(is.character), ~ gsub(" or ", "/", .x)))
 }
 
