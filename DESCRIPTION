@@ -21,7 +21,6 @@ Imports:
     purrr,
     stringr,
     tidycensus,
-    tidyr,
-    tpfuncts
+    tidyr
 Depends: 
     tidyverse

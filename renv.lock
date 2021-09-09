@@ -170,13 +170,6 @@
       "Repository": "CRAN",
       "Hash": "e75525c55c70e5f4f78c9960a4b402e9"
     },
-    "crosstalk": {
-      "Package": "crosstalk",
-      "Version": "1.1.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "2b06f9e415a62b6762e4b8098d2aecbc"
-    },
     "curl": {
       "Package": "curl",
       "Version": "4.3.2",
@@ -359,13 +352,6 @@
       "Repository": "CRAN",
       "Hash": "526c484233f42522278ab06fb185cb26"
     },
-    "htmlwidgets": {
-      "Package": "htmlwidgets",
-      "Version": "1.5.3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "6fdaa86d0700f8b3e92ee3c445a5a10d"
-    },
     "httr": {
       "Package": "httr",
       "Version": "1.4.2",
@@ -408,26 +394,12 @@
       "Repository": "CRAN",
       "Hash": "3d5108641f47470611a32d0bdf357a72"
     },
-    "later": {
-      "Package": "later",
-      "Version": "1.2.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "b61890ae77fea19fc8acadd25db70aa4"
-    },
     "lattice": {
       "Package": "lattice",
       "Version": "0.20-44",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "f36bf1a849d9106dc2af72e501f9de41"
-    },
-    "lazyeval": {
-      "Package": "lazyeval",
-      "Version": "0.2.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d908914ae53b04d4c0c0fd72ecc35370"
     },
     "lifecycle": {
       "Package": "lifecycle",
@@ -520,13 +492,6 @@
       "Repository": "CRAN",
       "Hash": "01f28d4278f15c76cddbea05899c5d6f"
     },
-    "plotly": {
-      "Package": "plotly",
-      "Version": "4.9.4.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "af4b92cb3828aa30002e2f945c49c2d7"
-    },
     "prettyunits": {
       "Package": "prettyunits",
       "Version": "1.1.1",
@@ -547,13 +512,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "14dc9f7a3c91ebb14ec5bb9208a07061"
-    },
-    "promises": {
-      "Package": "promises",
-      "Version": "1.2.0.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "4ab2c43adb4d4699cf3690acd378d75d"
     },
     "proxy": {
       "Package": "proxy",
@@ -764,18 +722,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "6e0ad90ac5669e35d5456cb61b295acb"
-    },
-    "tpfuncts": {
-      "Package": "tpfuncts",
-      "Version": "0.0.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "tpfuncts",
-      "RemoteUsername": "dpowerstp",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "fc7a740c484f7944f2b6a9db737e77b8af34f105",
-      "Hash": "ee868a41d00da6c65ef6f73cb1827513"
     },
     "units": {
       "Package": "units",

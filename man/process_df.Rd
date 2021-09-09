@@ -11,8 +11,6 @@ process_df(
   overall_cols,
   name_col,
   bind_overall = NULL,
-  signif_cols = list(Overall = "signif_overall", MC = "signif_mont", MD =
-    "signif_maryland"),
   root_df = NULL
 )
 }
@@ -26,8 +24,6 @@ process_df(
 \item{name_col}{Base-name of column to store values in for grouped dataframe.}
 
 \item{bind_overall}{Whether to add overall results as a row to the processed dataframe. Should enter name of column with groups comparing against (e.g., if comparing ages against overall, should enter age).}
-
-\item{signif_cols}{Named list with value representing name of the column with significance values, and names representing how significance should be described in the new column (e.g., "Montgomery County" = "signif_mont" would be for a signif_mont column describing the significance of differences with Montgomery County, and Montgomery County is how it would be represented in the new column).}
 
 \item{root_df}{If the df has already been processed more, the base-dataframe from which the df was processed.}
 }
