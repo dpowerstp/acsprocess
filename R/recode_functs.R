@@ -80,8 +80,8 @@ overall_check <- function(vec){
 #' Function to recode age-values in ACS dataframe, removing extraneous text and ordering column as factor
 #'
 #' @param df ACS dataframe with age values
-#' @param age_col Name of age column
-#' @param regroup Whether to regroup-age values. Accepts "decennial" for decennial Census results, and "race_age" for regrouping race/age column.
+#' @param age_col Name of age column as data-masked object
+#' @param regroup Whether to regroup-age values. Accepts "decennial" for decennial Census results, "race_age" for regrouping race/age column, and "sex_age" for regrouping sex/age groups.
 #'
 #' @return
 #' @export
@@ -89,7 +89,7 @@ overall_check <- function(vec){
 #' @examples
 age_recode <- function(df, age_col, regroup = "decennial") {
 
-  if (!regroup %in% c("decennial", "race_age")){
+  if (!regroup %in% c("decennial", "race_age", "sex_age")){
     warning("regroup parameter not valid")
   }
 
@@ -116,7 +116,7 @@ age_recode <- function(df, age_col, regroup = "decennial") {
   less_age <- grep("<", age_vec_order, value = T)
 
   # pull single digits and sort
-  single_dig <- grep("^[0-9]-", age_vec_order, value = T) %>%
+  single_dig <- grep("(^[0-9]-)|(^[0-9]$)", age_vec_order, value = T) %>%
     sort
 
   # reorder so 1) less than 2) signle digits 3) age vector order, and then check if overall value present and put last if so
@@ -144,22 +144,22 @@ age_recode <- function(df, age_col, regroup = "decennial") {
       string <- as.character(string)
 
       dplyr::case_when(string %in% c(less_age, single_dig) ~ age_grp_vec[1],
-                grepl("^1", string) ~ age_grp_vec[2],
-                grepl("^2", string) ~ age_grp_vec[3],
-                grepl("^3", string) ~ age_grp_vec[4],
-                grepl("^4", string) ~ age_grp_vec[5],
-                grepl("^5", string) ~ age_grp_vec[6],
-                grepl("^6", string) ~ age_grp_vec[7],
-                grepl("^7", string) ~ age_grp_vec[8],
-                !grepl("Overall", string, ignore.case = T, ) ~ age_grp_vec[9],
-                grepl("Overall",string, ignore.case = T) ~ string)
+                       grepl("^1", string) ~ age_grp_vec[2],
+                       grepl("^2", string) ~ age_grp_vec[3],
+                       grepl("^3", string) ~ age_grp_vec[4],
+                       grepl("^4", string) ~ age_grp_vec[5],
+                       grepl("^5", string) ~ age_grp_vec[6],
+                       grepl("^6", string) ~ age_grp_vec[7],
+                       grepl("^7", string) ~ age_grp_vec[8],
+                       !grepl("Overall", string, ignore.case = T, ) ~ age_grp_vec[9],
+                       grepl("Overall",string, ignore.case = T) ~ string)
 
     }
 
     # create factor of order
     df <- df %>%
       dplyr::mutate(age_group = process_age_group(age_new),
-             age_group = factor(age_group, age_grp_vec, age_grp_vec))
+                    age_group = factor(age_group, age_grp_vec, age_grp_vec))
 
   }
 
@@ -181,23 +181,59 @@ age_recode <- function(df, age_col, regroup = "decennial") {
       string <- as.character(string)
 
       dplyr::case_when(string %in% c(less_age, single_dig) ~ age_grp_vec[1],
-                grepl("(10)|(15)", string) ~ age_grp_vec[2],
-                grepl("(18)|(20)", string) ~ age_grp_vec[3],
-                grepl("(25)|(30)", string) ~ age_grp_vec[4],
-                grepl("35", string) ~ age_grp_vec[5],
-                grepl("^4", string) ~ age_grp_vec[6],
-                grepl("^5", string) ~ age_grp_vec[7],
-                grepl("^6", string) ~ age_grp_vec[8],
-                grepl("^7", string) ~ age_grp_vec[9],
-                !grepl("Overall", string, ignore.case = T, ) ~ age_grp_vec[10],
-                grepl("Overall",string, ignore.case = T) ~ string)
+                       grepl("(10)|(15)", string) ~ age_grp_vec[2],
+                       grepl("(18)|(20)", string) ~ age_grp_vec[3],
+                       grepl("(25)|(30)", string) ~ age_grp_vec[4],
+                       grepl("35", string) ~ age_grp_vec[5],
+                       grepl("^4", string) ~ age_grp_vec[6],
+                       grepl("^5", string) ~ age_grp_vec[7],
+                       grepl("^6", string) ~ age_grp_vec[8],
+                       grepl("^7", string) ~ age_grp_vec[9],
+                       !grepl("Overall", string, ignore.case = T, ) ~ age_grp_vec[10],
+                       grepl("Overall",string, ignore.case = T) ~ string)
 
     }
 
     # create factor of order
     df <- df %>%
       dplyr::mutate(age_group = process_age_group(age_new),
-             age_group = factor(age_group, age_grp_vec, age_grp_vec))
+                    age_group = factor(age_group, age_grp_vec, age_grp_vec))
+
+  }
+
+  else if (regroup == "sex_age"){
+    age_grp_vec = c(
+      "0-11",
+      "12-17",
+      "18-24",
+      "25-34",
+      "35-44",
+      "45-54",
+      "55-64",
+      "65-74",
+      "75+")
+
+    process_age_group <- function(string){
+      string <- as.character(string)
+
+      dplyr::case_when(string %in% c(less_age, single_dig) ~ age_grp_vec[1],
+                       grepl("^1[1-7]", string) ~ age_grp_vec[2],
+                       grepl("(18)", string) ~ age_grp_vec[3],
+                       grepl("^2", string) ~ age_grp_vec[4],
+                       grepl("^3", string) ~ age_grp_vec[5],
+                       grepl("^4", string) ~ age_grp_vec[6],
+                       grepl("^5", string) ~ age_grp_vec[7],
+                       grepl("^6", string) ~ age_grp_vec[8],
+                       grepl("^7", string) ~ age_grp_vec[9],
+                       !grepl("Overall", string, ignore.case = T, ) ~ age_grp_vec[10],
+                       grepl("Overall",string, ignore.case = T) ~ string)
+
+    }
+
+    # create factor of order
+    df <- df %>%
+      dplyr::mutate(age_group = process_age_group(age_new),
+                    age_group = factor(age_group, age_grp_vec, age_grp_vec))
 
   }
 
