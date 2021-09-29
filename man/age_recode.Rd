@@ -10,9 +10,9 @@ age_recode(df, age_col, regroup = "decennial")
 \arguments{
 \item{df}{ACS dataframe with age values}
 
-\item{age_col}{Name of age column}
+\item{age_col}{Name of age column as data-masked object}
 
-\item{regroup}{Whether to regroup-age values. Accepts "decennial" for decennial Census results, and "race_age" for regrouping race/age column.}
+\item{regroup}{Whether to regroup-age values. Accepts "decennial" for decennial Census results, "race_age" for regrouping race/age column, and "sex_age" for regrouping sex/age groups.}
 }
 \value{
 
