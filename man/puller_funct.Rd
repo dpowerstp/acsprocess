@@ -9,7 +9,7 @@ puller_funct(
   df,
   place_string = "",
   no_pull = FALSE,
-  variables = variables_2019
+  variables = acsprocess::variables_2019
 )
 }
 \arguments{
