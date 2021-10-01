@@ -1087,7 +1087,6 @@ process_owner_income_num <- function(df){
                                    "num_homeowners",
                                    "num_homeowners_moe")
 
-  acsprocess::data_saver(owner_income_num, place, "owner_income_num", desc_year = desc_year)
 }
 
 #' Process income for renters
