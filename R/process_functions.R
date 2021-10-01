@@ -602,6 +602,7 @@ process_income_last12 <- function(df){
 #' @examples
 process_employment_age_gender <- function(df){
   df %>%
+    acsprocess::process_employment_age_gender_base() %>%
     dplyr::filter(grepl("In labor force", labor_force_status)) %>%
     dplyr::mutate(employment_status = ifelse(grepl("employed", type_labor_force, ignore.case = TRUE), type_labor_force, employment_status),
            employment_status = ifelse(grepl("In Armed Forces", type_labor_force), "In Armed Forces", employment_status),
