@@ -92,6 +92,16 @@ data_saver <- function(object, place_string, data_string, desc_year = "acs5_2019
 
 # race ethnicity/ancestry/english proficiency ----
 
+
+#' Process race and ethnicity data
+#' Processes tidycensus downloaded race/ethnicity data
+#'
+#' @param df tidycensus downloaded race/ethnicity data file
+#'
+#' @return processed race/ethnicity data
+#' @export
+#'
+#' @examples
 process_race_ethn <- function(df){
 
   race_ethn_processed <- df %>%
@@ -116,13 +126,30 @@ process_race_ethn <- function(df){
 
 }
 
+#' Population totals from race/ethnicity
+#' Grab population totals from processed race/ethnciity data
+#'
+#' @param race_ethn_processed_df Processed race/ethnicity data
+#'
+#' @return Dataframe with population totals for given place
+#' @export
+#'
+#' @examples
 process_pop_tot <- function(race_ethn_processed_df){
   race_ethn_processed_df %>%
     dplyr::select(geoid, name, pop_total, pop_total_moe) %>%
     dplyr::distinct()
 }
 
-
+#' Process race, age, gender
+#' Processes tidycensus downloaded race, age, and gender data
+#'
+#' @param df tidycensus downloaded race, age, and gender data
+#'
+#' @return Processed race, age, and gender data
+#' @export
+#'
+#' @examples
 process_race_age_gender <- function(df){
 
   df %>%
@@ -137,6 +164,16 @@ process_race_age_gender <- function(df){
 }
 
 
+#' Process ancestry data
+#' Processes tidycensus downloaded ancestry data
+#'
+#' @param df tidycensus downloaded ancestry data
+#' @param sub Whether to calculate percentages of country for a given continent
+#'
+#' @return Processed tidycensus ancestry data
+#' @export
+#'
+#' @examples
 process_ancestry <- function(df, sub = F){
 
   ancestry <- df %>%
@@ -172,7 +209,15 @@ process_ancestry <- function(df, sub = F){
 
 }
 
-
+#' Process Asian ethnicity
+#' Processes tidycensus downloaded data on Asian ethnicity
+#'
+#' @param df tidycensus downloaded data on Asian by ethnicity
+#'
+#' @return processed data on Asian ethnicity
+#' @export
+#'
+#' @examples
 process_asian_disaggregated <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "ethnicity")) %>%
@@ -182,6 +227,14 @@ process_asian_disaggregated <- function(df){
                                    "tot_asian_moe")
 }
 
+#' Process age/english language proficiency
+#'
+#' @param df tidycensus downloaded ACS5 data on age and English-language proficiency
+#'
+#' @return processed data on age/English language proficiency
+#' @export
+#'
+#' @examples
 process_age_lang <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "age", "homelang")) %>%
@@ -191,6 +244,16 @@ process_age_lang <- function(df){
                                    "age_tot_moe")
 }
 
+
+#' Process foreign born birth
+#' Processes tidycensus downloaded data on birth by country of origin
+#'
+#' @param df tidycensus downloaded data on country of origin
+#'
+#' @return processed tidycensus dataset with country of origin results by continent
+#' @export
+#'
+#' @examples
 process_foreign_born_birth <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "continent", "americas")) %>%
@@ -206,6 +269,15 @@ process_foreign_born_birth <- function(df){
                                    component_moe = "moe")
 }
 
+#' Process foreign born
+#' Processes tidycensys downloaded data on birthplace
+#'
+#' @param df tidycensus downloaded data on birthplace
+#'
+#' @return processed dataframe on birth by location
+#' @export
+#'
+#' @examples
 process_foreign_born <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "birthplace")) %>%
@@ -218,6 +290,14 @@ process_foreign_born <- function(df){
 }
 
 
+#' Process foreign born by race
+#'
+#' @param df tidycensus downloaded dataset of birthplace by race
+#'
+#' @return Processed tidycensus dataframe of birthplace by race
+#' @export
+#'
+#' @examples
 process_race_foreign_born <-function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "birthplace")) %>%
@@ -228,9 +308,36 @@ process_race_foreign_born <-function(df){
                                    aggregate_moe = "race_total_moe")
 }
 
+#' Process language spoken at home
+#' Processes ACS5 tidycensus downloaded data on language spoken at home
+#'
+#' @param df ACS5 tidycensus downloaded data on language spoken at home
+#'
+#' @return Processed data on language spoken at home
+#' @export
+#'
+#' @examples
+process_home_lang <- function(df){
+  df %>%
+    acsprocess::separate_label(c(NA, NA, "language")) %>%
+    acsprocess::total_col_add(total_cols = list("pop_overall" = "language")) %>%
+    acsprocess::derive_pct_est_moe(proportion_col = "pct_language",
+                                   aggregate_est = "pop_overall",
+                                   aggregate_moe = "pop_overall_moe")
+}
+
 
 # internet access ----
 
+#' Process Computer/Internet Data
+#' Processes tidycensus downloaded data on computer/internet usage
+#'
+#' @param df tidycensus downloaded data on computer/internet usage
+#'
+#' @return processed data on computer/internet usage
+#' @export
+#'
+#' @examples
 process_computer_overall <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "comp_access", "int_type")) %>%
@@ -243,6 +350,15 @@ process_computer_overall <- function(df){
                        aggregate_moe = "tot_people_moe")
 }
 
+#' Process Computer/Internet by Age
+#' Processes ACS5 tidycensus downloaded data on computer/internet usage by age
+#'
+#' @param df ACS5 tidycensus downloaded data on computer/internet usage by age
+#'
+#' @return Processed data on computer/internet usage by age
+#' @export
+#'
+#' @examples
 process_computer_age <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "age", "comp", "int")) %>%
@@ -256,12 +372,30 @@ process_computer_age <- function(df){
 }
 
 
+#' Process internet/race data
+#' Processes ACS5 tidycensus downloaded data on internet/race, in preparation for other processing
+#'
+#' @param df ACS5 tidycensus downloaded data on internet usage by race
+#'
+#' @return Base-level processed data on internet usage by race
+#' @export
+#'
+#' @examples
 process_race_internet_base <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "computer_access", "internet_access")) %>%
     acsprocess::race_pull()
 }
 
+#' Process Computer Usage by Race
+#' Processes ACS5 tidycensus downloaded data on computer/internet usage by race
+#'
+#' @param df ACS5 tidycensus downloaded data on computer/internet usage by race
+#'
+#' @return processed data on computer/internet usage by race
+#' @export
+#'
+#' @examples
 process_race_computer <- function(df){
   df %>%
     acsprocess::process_race_internet_base() %>%
@@ -274,6 +408,15 @@ process_race_computer <- function(df){
                                    aggregate_moe = "race_total_moe")
 }
 
+#' Process race/internet data
+#' Processes ACS5 tidycensus downloaded data on race/internet usage
+#'
+#' @param df ACS5 tidycensus downloaded data on race/internet usage
+#'
+#' @return Processed data on race/internet usage
+#' @export
+#'
+#' @examples
 process_race_internet_complete <- function(df){
   df %>%
     acsprocess::process_race_internet_base() %>%
@@ -288,7 +431,15 @@ process_race_internet_complete <- function(df){
 
 # education ----
 
-# function to process education data overall
+#' Process education data
+#' Processes ACS5 tidycensus downloaded data on educational attainment
+#'
+#' @param df ACS5 tidycensus downloaded data on educational attainment
+#'
+#' @return Processed data on educational attainment
+#' @export
+#'
+#' @examples
 process_educ_overall <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "education")) %>%
@@ -298,6 +449,15 @@ process_educ_overall <- function(df){
                        "population_moe")
 }
 
+#' Process educational attainment by race
+#' Processes ACS5 tidycensus downloaded data on educational attainment by race
+#'
+#' @param df ACS5 tidycensus downloaded data on educational attainment by race
+#'
+#' @return Processed data on educational attainment by race
+#' @export
+#'
+#' @examples
 educ_race_process <- function(df){
 
   # education/race overall
@@ -320,6 +480,15 @@ educ_race_process <- function(df){
 
 }
 
+#' Process educational attainment by race
+#' ACS5 tidycensus downloaded data on educational attainment by race
+#'
+#' @param df ACS5 tidycensus downloaded data on educational attainment by race
+#'
+#' @return Processed data on educational attainment by race
+#' @export
+#'
+#' @examples
 process_educ_race <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "gender", "education")) %>%
@@ -327,6 +496,14 @@ process_educ_race <- function(df){
     dplyr::filter(race != "white alone")
 }
 
+#' Process education/race/sex data
+#'
+#' @param df ACS5 tidycensus downloaded data on educational attainment by race and sex
+#'
+#' @return Processed data on educational attainment by race and sex
+#' @export
+#'
+#' @examples
 process_educ_race_gender <- function(df){
   df %>%
     acsprocess::process_educ_race() %>%
@@ -348,7 +525,15 @@ process_educ_race_gender <- function(df){
 
 # income ----
 
-# function to process race/household income
+#' Process race/household income
+#' Processes ACS5 tidycensus downloaded data on race and household income
+#'
+#' @param df ACS5 tidycensus downloaded data on race and household income
+#'
+#' @return Processed data on race/household income
+#' @export
+#'
+#' @examples
 process_income_race <- function(df){
 
   df %>%
@@ -361,6 +546,15 @@ process_income_race <- function(df){
                                    aggregate_moe = "race_households_moe")
 }
 
+#' Process median income by race
+#' Processes ACS5 tidycensus downloaded data on household median income by race
+#'
+#' @param df ACS5 tidycensus downloaded data on household median income by race
+#'
+#' @return Processed data on median income by race
+#' @export
+#'
+#' @examples
 process_income_race_median <- function(df) {
   df %>%
     acsprocess::race_pull() %>%
@@ -374,6 +568,15 @@ process_income_race_median <- function(df) {
                                    type_moe = "ratio")
 }
 
+#' Process income data
+#' Processes ACS5 tidycensus downloaded data on income in last 12 months
+#'
+#' @param df ACS5 tidycensus downloaded data on income in last 12 months
+#'
+#' @return Processed data on income in last 12 months
+#' @export
+#'
+#' @examples
 process_income_last12 <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "income_range")) %>%
@@ -388,6 +591,15 @@ process_income_last12 <- function(df){
 
 # employment ----
 
+#' Process Employment/Age/Gender Data
+#' Processes ACS5 tidycensus downloaded data on employment by age and gender
+#'
+#' @param df ACS5 tidycensus downloaded data on employment by age and gender
+#'
+#' @return Processed data on employment by age and gender
+#' @export
+#'
+#' @examples
 process_employment_age_gender <- function(df){
   df %>%
     dplyr::filter(grepl("In labor force", labor_force_status)) %>%
@@ -407,6 +619,15 @@ process_employment_age_gender <- function(df){
     dplyr::distinct()
 }
 
+#' Process Race/Employment/Gender under 65
+#' Processes ACS5 tidycensus downloaded data on employment by race and gender for people under 65
+#'
+#' @param df ACS5 tidycensus downloaded data on employment by race and gender for people under 65
+#'
+#' @return Processed data on employment by race and gender for people under 65
+#' @export
+#'
+#' @examples
 process_race_employ_gender_u65 <- function(df) {
   df %>%
     acsprocess::process_race_employment_age_gender_base() %>%
@@ -428,6 +649,15 @@ process_race_employ_gender_u65 <- function(df) {
 }
 
 
+#' Base-processing of race/employment under 65 data
+#'
+#' @param df ACS5 tidycensus downloaded data on employment by race and gender for people under 65
+#' @param tot_df Totals dataset
+#'
+#' @return Base-processed data on employment by race and gender under 65
+#' @export
+#'
+#' @examples
 process_race_employment_u65_base <- function(df, tot_df) {
 
   df %>%
@@ -444,6 +674,15 @@ process_race_employment_u65_base <- function(df, tot_df) {
     dplyr::distinct()
 }
 
+#' Process race/employment data under 65
+#' Processes ACS5 tidycensus downloaded data on race/employment for people under 65
+#'
+#' @param df ACS5 tidycensus downloaded data on emloyment by race for people under 65
+#'
+#' @return Processed data on employment by race for people under 65
+#' @export
+#'
+#' @examples
 process_race_employment_u65 <- function(df){
   race_employment_u65_preprocess <- df %>%
     acsprocess::process_race_employment_age_gender_base() %>%
@@ -466,12 +705,30 @@ process_race_employment_u65 <- function(df){
   race_employment_u65
 }
 
+#' Base-processing employment by race, age, and gender
+#' Base processing of ACS5 tidycensus downloaded data on employment by race, age, and gender
+#'
+#' @param df ACS5 tidycensus downloaded data on employment by race, age, and gender
+#'
+#' @return Processed data on employment by race, age, and gender
+#' @export
+#'
+#' @examples
 process_race_employment_age_gender_base <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "gender", "age_range", "labor_force_status", "type_labor_force", "employment_status")) %>%
     acsprocess::race_pull()
 }
 
+#' Process employment by race and gender
+#' Process ACS5 tidycensus downloaded data on employment by race and gender
+#'
+#' @param df ACS5 tidycensus downloaded data on employment by race and gender
+#'
+#' @return Processed data on employment by race and gender
+#' @export
+#'
+#' @examples
 process_race_gender_employment_general <- function(df){
   process <- df %>%
     acsprocess::process_race_employment_age_gender_base() %>%
@@ -502,14 +759,32 @@ process_race_gender_employment_general <- function(df){
     dplyr::distinct()
 }
 
+#' Base-process employment/age/gender
+#' Base-processing of ACS5 tidycensus downloaded data on employment/age/gender
+#'
+#' @param df ACS5 tidycensus downloaded data on employment/age/gender
+#'
+#' @return Base-processed ACS5 tidycensus downloaded data on employment/age/gender
+#' @export
+#'
+#' @examples
 process_employment_age_gender_base <- function(df){
   df %>%
     acsprocess::process_race_employment_age_gender_base() %>%
     dplyr::filter(!grepl("C23002", variable))
 }
 
-process_employment_age <- function(df){
 
+#' Process employment/age data
+#' Processes ACS5 tidycensus downloaded data on employment by age
+#'
+#' @param df ACS5 tidycensus downloaded data on employment by age
+#'
+#' @return Processed data on employment by age
+#' @export
+#'
+#' @examples
+process_employment_age <- function(df){
   employment_age_preprocess <- df %>%
     acsprocess::process_employment_age_gender_base() %>%
     dplyr::filter(grepl("In labor force", labor_force_status)) %>%
@@ -539,6 +814,14 @@ process_employment_age <- function(df){
   employment_age
 }
 
+#' Process labor force by race and gender for people under 65
+#'
+#' @param df ACS5 tidycensus downloaded data on labor force participation by race and gender for people under 65
+#'
+#' @return Processed data on employment by race and gender for people under 65
+#' @export
+#'
+#' @examples
 process_race_laborforce_gender_u65 <- function(df){
   race_laborforce_gender_u65 <- df %>%
     acsprocess::process_race_employment_age_gender_base() %>%
@@ -559,6 +842,16 @@ process_race_laborforce_gender_u65 <- function(df){
 
 
 # tenure/housing ----
+
+#' Process tenure by race
+#' Processes ACS5 tidycensus downloaded data on tenure by race
+#'
+#' @param df ACS5 tidycensus downloaded data on tenure by race
+#'
+#' @return Processed data on tenure by race
+#' @export
+#'
+#' @examples
 process_tenure_race <- function(df){
 
   df %>%
@@ -574,6 +867,15 @@ process_tenure_race <- function(df){
 }
 
 
+#' Process cost-burden for homeowners
+#' Processes ACS5 tidycensus downloaded data on cost burden by owners
+#'
+#' @param df ACS5 tidycensus downloaded data on cost burden by owners
+#'
+#' @return Processed data on cost burden for owners
+#' @export
+#'
+#' @examples
 process_burden_owners <- function(df){
 
   burden_owners_overall <- df %>%
@@ -594,6 +896,15 @@ process_burden_owners <- function(df){
   return(burden_owners_overall)
 }
 
+#' Process cost-burden for owners by mortgage status
+#' Processes ACS5 tidycensus downloaded data on cost-burden for owners by mortgage status
+#'
+#' @param df ACS5 tidycensus downloaded data on cost-burden for owners by mortgage status
+#'
+#' @return Processed data on cost-burden for owners by mortgage status
+#' @export
+#'
+#' @examples
 process_burden_owners_mortgage <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "mortgage_status", "percent_household_income")) %>%
@@ -605,6 +916,15 @@ process_burden_owners_mortgage <- function(df){
                        aggregate_moe = "total_homeowners_mortgage_moe")
 }
 
+#' Process cost burden by household income for owners
+#' Processes ACS5 tidycensus downloaded data on cost-burden for owners by household income
+#'
+#' @param df ACS5 tidycensus downloaded data on cost-burden for owners by household income
+#'
+#' @return Processed cost-burden by household income data for owners
+#' @export
+#'
+#' @examples
 process_household_income_ownercosts <- function(df) {
   df %>%
     acsprocess::total_col_add(list("households_bracket" = "housing_costs"), join_col = c("name", "household_income")) %>%
@@ -616,6 +936,15 @@ process_household_income_ownercosts <- function(df) {
 
 }
 
+#' Process cost-burden by household income for renters
+#' Processes ACS5 tidycensus downloaded data on cost-burden by household income for renters
+#'
+#' @param df ACS5 tidycensus downloaded data on cost-burden by household income for renters
+#'
+#' @return Processed data on cost burden by household income for renters
+#' @export
+#'
+#' @examples
 process_household_income_rentercosts <- function(df){
   df %>%
     acsprocess::total_col_add(list("households_bracket" = "housing_costs"), join_col = c("name", "household_income")) %>%
@@ -626,6 +955,15 @@ process_household_income_rentercosts <- function(df){
                        aggregate_moe = "households_bracket_moe")
 }
 
+#' Process tenure by age
+#' Processes ACS5 tidycensus downloaded data on tenure by age
+#'
+#' @param df ACS5 tidycensus downloaded data on tenure by age
+#'
+#' @return Processed data on tenure by age
+#' @export
+#'
+#' @examples
 process_tenure_age <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "tenure", "age")) %>%
@@ -636,6 +974,15 @@ process_tenure_age <- function(df){
                                    "tenure_tot_moe")
 }
 
+#' Base-process home-ownership by race
+#' ACS5 tidycensus downloaded data on home-ownership by race
+#'
+#' @param df ACS5 tidycensus downloaded data on home-ownership by race
+#'
+#' @return Processed data on home-ownership by race
+#' @export
+#'
+#' @examples
 process_race_home_own <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "tenure")) %>%
@@ -643,6 +990,15 @@ process_race_home_own <- function(df){
     dplyr::mutate(race = ifelse(race == "tenure", NA, race))
 }
 
+#' Process home-ownership by race and tenure
+#' Processes ACS5 tidycensus downloaded data on tenure and race
+#'
+#' @param df ACS5 tidycensus downloaded data on tenure by race
+#'
+#' @return Processed data on tenure by race
+#' @export
+#'
+#' @examples
 process_race_home_own_race_tenure <- function(df){
   df %>%
     acsprocess::process_race_home_own() %>%
@@ -655,6 +1011,15 @@ process_race_home_own_race_tenure <- function(df){
                                    component_est = "estimate", component_moe = "moe")
 }
 
+#' Process tenure
+#' Processes ACS5 tidycensus downloaded data on tenure
+#'
+#' @param df ACS5 tidycensus downloaded data on tenure
+#'
+#' @return Processed data on tenure
+#' @export
+#'
+#' @examples
 process_tenure_df <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "tenure")) %>%
@@ -664,6 +1029,15 @@ process_tenure_df <- function(df){
                                    aggregate_moe = "tenure_overall_moe")
 }
 
+#' Process median income by tenure
+#' Processes ACS5 tidycensus downloaded data on median income by tenure
+#'
+#' @param df ACS5 tidycensus downloaded data on median income by tenure
+#'
+#' @return Processed data on median income by tenure
+#' @export
+#'
+#' @examples
 process_tenure_income_median <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, NA, "tenure")) %>%
@@ -675,15 +1049,16 @@ process_tenure_income_median <- function(df){
     dplyr::select(-c(label, concept, variable))
 }
 
-process_home_lang <- function(df){
-  df %>%
-    acsprocess::separate_label(c(NA, NA, "language")) %>%
-    acsprocess::total_col_add(total_cols = list("pop_overall" = "language")) %>%
-    acsprocess::derive_pct_est_moe(proportion_col = "pct_language",
-                                   aggregate_est = "pop_overall",
-                                   aggregate_moe = "pop_overall_moe")
-}
 
+#' Process cost-burden for renters
+#' Processes ACS5 tidycensus downloaded data on cost-burden for renters
+#'
+#' @param df ACS5 tidycensus downloaded data on cost-burden for renters
+#'
+#' @return Processed data on cost-burden for renters
+#' @export
+#'
+#' @examples
 process_burden_renters <- function(df) {
   df %>%
     acsprocess::separate_label(c(NA, NA, "percent_income")) %>%
@@ -694,6 +1069,15 @@ process_burden_renters <- function(df) {
     dplyr::mutate(cumul_pct = cumsum(pct_renters))
 }
 
+#' Process income for owners
+#' Processes ACS5 tidycensus downloaded data on income for owners
+#'
+#' @param df ACS5 tidycensus downloaded data on income for owners
+#'
+#' @return Processed data on income for owners
+#' @export
+#'
+#' @examples
 process_owner_income_num <- function(df){
   df %>%
     dplyr::filter(is.na(housing_costs)) %>%
@@ -705,6 +1089,15 @@ process_owner_income_num <- function(df){
   acsprocess::data_saver(owner_income_num, place, "owner_income_num", desc_year = desc_year)
 }
 
+#' Process income for renters
+#' Processes ACS5 tidycensus downloaded data on income for renters
+#'
+#' @param df ACS5 tidycensus downloaded data on income for renters
+#'
+#' @return Processed data on income for renters
+#' @export
+#'
+#' @examples
 process_renter_income_num <- function(df){
   df %>%
     dplyr::filter(is.na(housing_costs)) %>%
@@ -718,6 +1111,15 @@ process_renter_income_num <- function(df){
 
 # health insurance ----
 
+#' Process health insurance by race
+#' Processes ACS5 tidycensus downloaded data on health insurance by race
+#'
+#' @param df ACS5 tidycensus downloaded data on health insurance by race
+#'
+#' @return Processed data on health insurance by race
+#' @export
+#'
+#' @examples
 process_health_race <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "age", "health")) %>%
@@ -731,6 +1133,15 @@ process_health_race <- function(df){
 
 }
 
+#' Process health-insurance by age
+#' Processes ACS5 tidycensus downloaded data on health insurance by age
+#'
+#' @param df ACS5 tidycensus downloaded data on health insurance by age
+#'
+#' @return Processed health-insurance by age data
+#' @export
+#'
+#' @examples
 process_health_age <- function(df) {
   # browser()
   df <- df %>%
@@ -755,6 +1166,17 @@ process_health_age <- function(df) {
 
 # disability ----
 
+#' Pull type of disability
+#' Creates column on disability by type from ACS5 tidycensus downloaded data on disability by type
+#'
+#' @param df ACS5 tidycensus downloaded data on disability by type
+#' @param new_col Name of new column that will store disability-type, data-masked; default disability
+#' @param concept_col Data-masked name of concept column; default concept
+#'
+#' @return ACS5 tidycensus downloaded data on disability by type with disability column
+#' @export
+#'
+#' @examples
 disab_pull <- function(df, new_col = disability, concept_col = concept){
   df %>%
     dplyr::mutate({{new_col}} := {{concept_col}} %>%
@@ -765,6 +1187,15 @@ disab_pull <- function(df, new_col = disability, concept_col = concept){
 }
 
 
+#' Process disability overall
+#' Processes ACS5 tidycensus downloaded data on disability overall
+#'
+#' @param df ACS5 tidycensus downloaded data on disability overall with disability column
+#'
+#' @return Processed data on disability overall with disability column
+#' @export
+#'
+#' @examples
 process_disability_overall <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "sex", "age", "disability")) %>%
@@ -779,6 +1210,16 @@ process_disability_overall <- function(df){
                        aggregate_moe = "tot_age_moe")
 }
 
+#' Processes disability by type
+#' Processes ACS5 tidycensus downloaded data on disability by type
+#'
+#' @param df ACS5 tidycensus downloaded data on disability by type
+#' @param pop_tot_df Dataframe with population totals
+#'
+#' @return Processed data on disability by type
+#' @export
+#'
+#' @examples
 process_read_disab_type <- function(df, pop_tot_df){
   df %>%
     acsprocess::disab_pull(disability, concept) %>%
@@ -798,6 +1239,15 @@ process_read_disab_type <- function(df, pop_tot_df){
     dplyr::left_join(pop_tot_df)
 }
 
+#' Process disability as percent of population
+#' Processes ACS5 tidycensus downloaded data on disability, calculating percentages of place's population
+#'
+#' @param df_disability ACS5 tidycensus downloaded data on percentages of people with a disability
+#'
+#' @return
+#' @export
+#'
+#' @examples
 process_disability_pop <- function (df_disability){
   df_disability %>%
     acsprocess::est_moe_derive(c("name", "disability")) %>%
@@ -807,6 +1257,15 @@ process_disability_pop <- function (df_disability){
 }
 
 
+#' Process disability by age
+#' Processes ACS5 tidycensus downloaded data on rates of disability by age
+#'
+#' @param df_disability ACS5 tidycensus downloaded data on disability by age
+#'
+#' @return Processed data on disability by age
+#' @export
+#'
+#' @examples
 process_disability_age <- function (df_disability){
   df_disability %>%
     acsprocess::est_moe_derive(c("name", "age", "disability")) %>%
@@ -816,6 +1275,16 @@ process_disability_age <- function (df_disability){
 }
 
 
+#' Process disability by type
+#' Processes ACS5 tidycensus downloaded data on disability by type
+#'
+#' @param df ACS5 tidycensus downloaded data on disability by type
+#' @param df_disab_pop Data on disability as percent of population
+#'
+#' @return
+#' @export
+#'
+#' @examples
 process_disab_type <- function(df, df_disab_pop){
   df %>%
     dplyr::select(-c(sex, age, variable, label)) %>%
@@ -841,6 +1310,15 @@ process_disab_type <- function(df, df_disab_pop){
 }
 
 
+#' Process disability by sex
+#' Processes ACS5 tidycensus downloaded data on rates of disability by sex
+#'
+#' @param df ACS5 tidycensus downloaded data on disability by sex
+#'
+#' @return Processed disability by sex data
+#' @export
+#'
+#' @examples
 process_sex_disab_overall <- function(df){
   df %>%
     acsprocess::est_moe_derive(c("name", "sex", "disability")) %>%
@@ -850,6 +1328,16 @@ process_sex_disab_overall <- function(df){
 }
 
 
+#' Process disability by sex
+#' Processes ACS5 tidycensus downloaded data on disability by sex
+#'
+#' @param df ACS5 tidycensus downloaded data on disability
+#' @param df_disab_sex  ACS5 tidycensus downloaded data on disability by sex
+#'
+#' @return Processed disability by sex data
+#' @export
+#'
+#' @examples
 process_disab_sex <- function(df, df_disab_sex){
   # browser()
 
@@ -880,6 +1368,16 @@ process_disab_sex <- function(df, df_disab_sex){
     dplyr::rename(pct_moe_sex = pct_moe)
 }
 
+#' Process disability by age
+#' Processes ACS5 tidycensus downloaded data on disability by age
+#'
+#' @param df ACS5 tidycensus downloaded data on disability by age
+#' @param disab_age_df Disability by age data
+#'
+#' @return Processed disability by age data
+#' @export
+#'
+#' @examples
 process_disab_age <- function(df, disab_age_df) {
   df %>%
     dplyr::select(-c(sex, variable, label)) %>%
@@ -919,12 +1417,30 @@ process_disab_age <- function(df, disab_age_df) {
     dplyr::rename(pct_moe_disab = pct_moe)
 }
 
+#' Pull race/disability/age
+#' Pulls race/disability/age from tidycensus downloaded ACS5 data
+#'
+#' @param df tidycensus downloaded ACS5 data on race/disability/age
+#'
+#' @return Dataframe with variables for age, disability, race
+#' @export
+#'
+#' @examples
 process_race_disability_age <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "age", "disability")) %>%
     acsprocess::race_pull()
 }
 
+#' Process race/disability data
+#' Processes tidycensus downloaded ACS5 data on disability by race
+#'
+#' @param df tidycensus downloaded ACS5 data on disability and race and age
+#'
+#' @return tidycensus downloaded ACS5 data on race/disability
+#' @export
+#'
+#' @examples
 process_race_disability <- function(df){
   df %>%
     acsprocess::process_race_disability_age() %>%
@@ -942,6 +1458,16 @@ process_race_disability <- function(df){
 
 
 # sex ----
+
+#' Process sex data
+#' Processes tidycensus downloaded ACS5 data on sex
+#'
+#' @param df tidycensus downloaded ACS5 data on sex
+#'
+#' @return Processed data on sex
+#' @export
+#'
+#' @examples
 process_gender <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "gender")) %>%
@@ -949,6 +1475,15 @@ process_gender <- function(df){
     acsprocess::derive_pct_est_moe("pct_gender", "total", "total_moe")
 }
 
+#' Process age/sex data
+#' Processes tidycensus downloaded ACS5 data on sex by age
+#'
+#' @param df tidycensus downloaded ACS5 data on sex by age
+#'
+#' @return Processed data on age by sex
+#' @export
+#'
+#' @examples
 process_age_gender <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "gender", "age")) %>%
@@ -960,6 +1495,15 @@ process_age_gender <- function(df){
 
 # poverty ----
 
+#' Process poverty by race and age data
+#' Processes tidycensus downloaded ACS5 data on poverty by race by age
+#'
+#' @param df tidycensus downloaded ACS5 data on poverty by race by age
+#'
+#' @return Processes data on poverty by race by age
+#' @export
+#'
+#' @examples
 process_poverty_race_age <- function(df) {
   df %>%
     acsprocess::separate_label(c(NA, NA, "poverty", "age")) %>%
@@ -974,6 +1518,15 @@ process_poverty_race_age <- function(df) {
 }
 
 
+#' Process detailed poverty data
+#' Processes detailed tidycensus downloaded ACS5 data on poverty
+#'
+#' @param df tidycensus downloaded ACS5 data on poverty
+#'
+#' @return ACS5 data on poverty
+#' @export
+#'
+#' @examples
 process_poverty_detail <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "incpov_ratio")) %>%
@@ -983,6 +1536,15 @@ process_poverty_detail <- function(df){
                        "pop_tot_moe")
 }
 
+#' Process poverty by sex data
+#' Processes tidycensus downloaded ACS5 data on poverty by sex
+#'
+#' @param df tidycensus downloaded ACS5 data on poverty by sex
+#'
+#' @return Processed data on poverty by sex
+#' @export
+#'
+#' @examples
 process_poverty_sex <- function(df){
   return <- df %>%
     acsprocess::separate_label(c(NA, NA, "pov_status", "sex", "age")) %>%
@@ -1017,6 +1579,15 @@ process_poverty_sex <- function(df){
     dplyr::rename(pct_moe_pov_all = pct_moe)
 }
 
+#' Process poverty by race and sex
+#' Processes tidycensus downloaded ACS5 data on poverty by race and sex
+#'
+#' @param df tidycensus downloaded ACS5 data on poverty by race and sex
+#'
+#' @return tidycensus downloaded ACS5 data on poverty by race and sex
+#' @export
+#'
+#' @examples
 process_poverty_race_sex <- function(df){
   return <- df %>%
     acsprocess::race_pull() %>%
@@ -1074,6 +1645,15 @@ process_poverty_race_sex <- function(df){
 }
 
 
+#' Process poverty by sex and age
+#' Processes tidycensus downloaded ACS5 data on poverty by sex and age
+#'
+#' @param df tidycensus downloaded ACS5 data on poverty by sex and age
+#'
+#' @return Processed data on poverty by sex and age
+#' @export
+#'
+#' @examples
 process_poverty_sex_age <- function(df){
   return <- df %>%
     acsprocess::separate_label(c(NA, NA, "pov_status", "sex", "age")) %>%
@@ -1110,6 +1690,15 @@ process_poverty_sex_age <- function(df){
                        "sex_age_pop_moe")
 }
 
+#' Process poverty data
+#' Processes tidycensus downloaded ACS5 data on poverty
+#'
+#' @param df tidycensus downloaded ACS5 data on poverty
+#'
+#' @return Processed data on poverty
+#' @export
+#'
+#' @examples
 process_poverty <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "income_rel_poverty")) %>%
@@ -1123,6 +1712,15 @@ process_poverty <- function(df){
 
 # family ----
 
+#' Process family-status data
+#' Processes tidycensus downloaded ACS5 data on family status
+#'
+#' @param df tidycensus downloaded ACS5 data on family
+#'
+#' @return Processed data on family status
+#' @export
+#'
+#' @examples
 process_family <- function(df){
   process <- df %>%
     acsprocess::separate_label(c(NA, NA, "hous_type", "hous_people")) %>%
@@ -1130,12 +1728,30 @@ process_family <- function(df){
                     "tot_type" = "hous_people"), join_col = c("name", "hous_type"))
 }
 
+#' Process poverty by family status
+#' Processes tidycensus downloaded ACS5 data on poverty by family status
+#'
+#' @param df tidycensus downloaded ACS5 data on poverty by family status
+#'
+#' @return Processed data on poverty by family status
+#' @export
+#'
+#' @examples
 process_family_poverty <- function(df){
   process <- df %>%
     acsprocess::separate_label(c(NA, NA, "pov_status", "fam_type", "fam_occupants", "occupants_age")) %>%
     acsprocess::total_col_add(c("households" = "pov_status", "pov_status_tot" = "fam_type", "pov_type_tot" = "fam_occupants", "pov_type_occ_tot" = "occupants_age"), join_col = c("name", "pov_status", "fam_type", "fam_occupants"))
 }
 
+#' Process family by poverty and race
+#' Processes tidycensus downloaded ACS5 data on family-status by poverty and race
+#'
+#' @param df tidycensus downloaded ACS5 data on family-status by poverty and race
+#'
+#' @return
+#' @export
+#'
+#' @examples
 process_family_poverty_race <- function(df){
   process <- df %>%
     acsprocess::race_pull() %>%
@@ -1171,6 +1787,16 @@ process_family_poverty_race <- function(df){
     )
 }
 
+
+#' Process family type by income
+#' Processes tidycensus downloaded ACS5 data on family type by income
+#'
+#' @param df tidycensus downloaded ACS5 data on family type by income
+#'
+#' @return Processed data on family type by income
+#' @export
+#'
+#' @examples
 process_family_type_income <- function(df){
   process <- df %>%
     acsprocess::separate_label(c(NA, NA, NA, "fam_type", NA, "child", NA, "other_fam_extra"))
@@ -1190,6 +1816,15 @@ process_family_type_income <- function(df){
                   join_col = c("name", "fam_type"))
 }
 
+#' Process family-type by tenure
+#' Processes tidycensus downloaded ACS5 data on family-type by tenure data
+#'
+#' @param df tidycensus downloaded ACS5 data on family-type by tenure
+#'
+#' @return tidycensus downloaded ACS5 data on family-type by tenure
+#' @export
+#'
+#' @examples
 process_family_tenure <- function(df){
   process <- df %>%
     acsprocess::separate_label(
@@ -1203,6 +1838,14 @@ process_family_tenure <- function(df){
     )
 }
 
+#' Process family-type by public assistance
+#'
+#' @param df tidycensus downloaded ACS5 data on family-type by receipt of public assistance
+#'
+#' @return tidycensus downloaded ACS5 data on family-type by public assistance
+#' @export
+#'
+#' @examples
 process_family_pubassist <- function(df){
   process <- df %>%
     acsprocess::separate_label(
@@ -1227,6 +1870,15 @@ process_family_pubassist <- function(df){
 
 # public assistance ----
 
+#' Process race by public assistance data
+#' Processes tidycensus downloaded ACS5 data on receipt of public assistance by race
+#'
+#' @param df tidycensus downloaded ACS5 data on receipt of public assistance by race
+#'
+#' @return Processed data on receipt of public assistance by race
+#' @export
+#'
+#' @examples
 process_race_assist <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "public_assist")) %>%
@@ -1238,12 +1890,31 @@ process_race_assist <- function(df){
 }
 
 # transportation ----
+
+#' Base-process transport to work by race
+#' Processes tidycensus downloaded ACS5 data on transport to work by race
+#'
+#' @param df tidycensus downloaded ACS5 data on transport to work by race
+#'
+#' @return Processed data on transport to work by race
+#' @export
+#'
+#' @examples
 process_race_transport_base <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "transport_to_work")) %>%
     acsprocess::race_pull()
 }
 
+#' Process transport to work by race
+#' Processes tidycensus downloaded ACS5 data on transport to work by race
+#'
+#' @param df tidycensus downloaded ACS5 data on transport to work by race
+#'
+#' @return Processed data on transport to work by race
+#' @export
+#'
+#' @examples
 process_race_transport_complete <- function(df) {
   df %>%
     acsprocess::process_race_transport_base() %>%
