@@ -1739,7 +1739,21 @@ process_family <- function(df){
 #' @examples
 process_family_poverty <- function(df){
   process <- df %>%
-    acsprocess::separate_label(c(NA, NA, "pov_status", "fam_type", "fam_occupants", "occupants_age")) %>%
+    acsprocess::separate_label(c(NA, NA, "pov_status", "fam_type", "fam_occupants", "occupants_age", "other_fam_extra"))
+
+  other_process <- process %>%
+    dplyr::filter(grepl("Other family", fam_type)) %>%
+    dplyr::filter(!is.na(fam_occupants)) %>%
+    dplyr::mutate(fam_type = fam_occupants,
+                  fam_occupants = occupants_age,
+                  occupants_age = other_fam_extra) %>%
+    dplyr::select(-other_fam_extra)
+
+  process_final <- process %>%
+    dplyr::filter(!grepl("Other family", fam_type)) %>%
+    dplyr::select(-other_fam_extra) %>%
+    rbind(other_process) %>%
+    dplyr::mutate(occupants_age = ifelse(grepl("No related", fam_occupants), "No children", occupants_age)) %>%
     acsprocess::total_col_add(c("households" = "pov_status", "pov_status_tot" = "fam_type", "pov_type_tot" = "fam_occupants", "pov_type_occ_tot" = "occupants_age"), join_col = c("name", "pov_status", "fam_type", "fam_occupants"))
 }
 
