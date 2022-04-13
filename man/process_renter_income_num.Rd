@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_renter_income_num}
 \alias{process_renter_income_num}
-\title{Process income for renters
-Processes ACS5 tidycensus downloaded data on income for renters}
+\title{Process income for renters}
 \usage{
 process_renter_income_num(df)
 }
@@ -14,6 +13,5 @@ process_renter_income_num(df)
 Processed data on income for renters
 }
 \description{
-Process income for renters
 Processes ACS5 tidycensus downloaded data on income for renters
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/signif_test.R
 \name{signif_overall}
 \alias{signif_overall}
-\title{Significance overall
-Function to calculate overall results for a root dataframe, and compare significance of group-differences for a grouped dataframe.}
+\title{Significance overall}
 \usage{
 signif_overall(
   processed_df,
@@ -31,6 +30,5 @@ signif_overall(
 The processed dataframe with additional columns for the overall estimate and MOE, the critical value of groups differences from the overall difference, and the overall statistical significance of results. If bind_overall is not null, also has an additional row for overall results.
 }
 \description{
-Significance overall
 Function to calculate overall results for a root dataframe, and compare significance of group-differences for a grouped dataframe.
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_ethn}
 \alias{process_race_ethn}
-\title{Process race and ethnicity data
-Processes tidycensus downloaded race/ethnicity data}
+\title{Process race and ethnicity data}
 \usage{
 process_race_ethn(df)
 }
@@ -14,6 +13,5 @@ process_race_ethn(df)
 processed race/ethnicity data
 }
 \description{
-Process race and ethnicity data
 Processes tidycensus downloaded race/ethnicity data
 }

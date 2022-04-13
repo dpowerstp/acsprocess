@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_tenure_race}
 \alias{process_tenure_race}
-\title{Process tenure by race
-Processes ACS5 tidycensus downloaded data on tenure by race}
+\title{Process tenure by race}
 \usage{
 process_tenure_race(df)
 }
@@ -14,6 +13,5 @@ process_tenure_race(df)
 Processed data on tenure by race
 }
 \description{
-Process tenure by race
 Processes ACS5 tidycensus downloaded data on tenure by race
 }

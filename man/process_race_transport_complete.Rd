@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_transport_complete}
 \alias{process_race_transport_complete}
-\title{Process transport to work by race
-Processes tidycensus downloaded ACS5 data on transport to work by race}
+\title{Process transport to work by race}
 \usage{
 process_race_transport_complete(df)
 }
@@ -14,6 +13,5 @@ process_race_transport_complete(df)
 Processed data on transport to work by race
 }
 \description{
-Process transport to work by race
 Processes tidycensus downloaded ACS5 data on transport to work by race
 }

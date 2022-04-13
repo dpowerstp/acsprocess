@@ -15,5 +15,5 @@ process_race_employment_u65_base(df, tot_df)
 Base-processed data on employment by race and gender under 65
 }
 \description{
-Base-processing of race/employment under 65 data
+Performs base-processing of race/employment under 65 data
 }

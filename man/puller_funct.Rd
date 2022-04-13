@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{puller_funct}
 \alias{puller_funct}
-\title{Prepare ACS data
-Function to standardize tidycensus downloaded ACS data, with option to filter to a specific place}
+\title{Prepare ACS data}
 \usage{
 puller_funct(
   df,
@@ -25,6 +24,5 @@ puller_funct(
 tidycensus dataframe with column names in lower case and variable labels associated with tidycensus data
 }
 \description{
-Prepare ACS data
 Function to standardize tidycensus downloaded ACS data, with option to filter to a specific place
 }

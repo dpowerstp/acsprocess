@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_disability_age}
 \alias{process_race_disability_age}
-\title{Pull race/disability/age
-Pulls race/disability/age from tidycensus downloaded ACS5 data}
+\title{Pull race/disability/age}
 \usage{
 process_race_disability_age(df)
 }
@@ -14,6 +13,5 @@ process_race_disability_age(df)
 Dataframe with variables for age, disability, race
 }
 \description{
-Pull race/disability/age
 Pulls race/disability/age from tidycensus downloaded ACS5 data
 }

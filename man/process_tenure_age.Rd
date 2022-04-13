@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_tenure_age}
 \alias{process_tenure_age}
-\title{Process tenure by age
-Processes ACS5 tidycensus downloaded data on tenure by age}
+\title{Process tenure by age}
 \usage{
 process_tenure_age(df)
 }
@@ -14,6 +13,5 @@ process_tenure_age(df)
 Processed data on tenure by age
 }
 \description{
-Process tenure by age
 Processes ACS5 tidycensus downloaded data on tenure by age
 }

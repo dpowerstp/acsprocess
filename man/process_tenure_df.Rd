@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_tenure_df}
 \alias{process_tenure_df}
-\title{Process tenure
-Processes ACS5 tidycensus downloaded data on tenure}
+\title{Process tenure}
 \usage{
 process_tenure_df(df)
 }
@@ -14,6 +13,5 @@ process_tenure_df(df)
 Processed data on tenure
 }
 \description{
-Process tenure
 Processes ACS5 tidycensus downloaded data on tenure
 }

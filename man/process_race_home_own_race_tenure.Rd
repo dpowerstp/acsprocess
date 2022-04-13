@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_home_own_race_tenure}
 \alias{process_race_home_own_race_tenure}
-\title{Process home-ownership by race and tenure
-Processes ACS5 tidycensus downloaded data on tenure and race}
+\title{Process home-ownership by race and tenure}
 \usage{
 process_race_home_own_race_tenure(df)
 }
@@ -14,6 +13,5 @@ process_race_home_own_race_tenure(df)
 Processed data on tenure by race
 }
 \description{
-Process home-ownership by race and tenure
 Processes ACS5 tidycensus downloaded data on tenure and race
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_internet_base}
 \alias{process_race_internet_base}
-\title{Process internet/race data
-Processes ACS5 tidycensus downloaded data on internet/race, in preparation for other processing}
+\title{Process internet/race data}
 \usage{
 process_race_internet_base(df)
 }
@@ -14,6 +13,5 @@ process_race_internet_base(df)
 Base-level processed data on internet usage by race
 }
 \description{
-Process internet/race data
 Processes ACS5 tidycensus downloaded data on internet/race, in preparation for other processing
 }

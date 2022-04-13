@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_employment_age_gender_base}
 \alias{process_race_employment_age_gender_base}
-\title{Base-processing employment by race, age, and gender
-Base processing of ACS5 tidycensus downloaded data on employment by race, age, and gender}
+\title{Base-processing employment by race, age, and gender}
 \usage{
 process_race_employment_age_gender_base(df)
 }
@@ -14,6 +13,5 @@ process_race_employment_age_gender_base(df)
 Processed data on employment by race, age, and gender
 }
 \description{
-Base-processing employment by race, age, and gender
 Base processing of ACS5 tidycensus downloaded data on employment by race, age, and gender
 }

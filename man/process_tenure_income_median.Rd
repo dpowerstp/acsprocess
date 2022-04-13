@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_tenure_income_median}
 \alias{process_tenure_income_median}
-\title{Process median income by tenure
-Processes ACS5 tidycensus downloaded data on median income by tenure}
+\title{Process median income by tenure}
 \usage{
 process_tenure_income_median(df)
 }
@@ -14,6 +13,5 @@ process_tenure_income_median(df)
 Processed data on median income by tenure
 }
 \description{
-Process median income by tenure
 Processes ACS5 tidycensus downloaded data on median income by tenure
 }

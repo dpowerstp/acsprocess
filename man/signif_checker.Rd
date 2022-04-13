@@ -2,8 +2,7 @@
 % Please edit documentation in R/signif_test.R
 \name{signif_checker}
 \alias{signif_checker}
-\title{Significance check
-Loops through named list of columns containing statistical-significance results, and creates new column describing any statistically significant results.}
+\title{Significance check}
 \usage{
 signif_checker(
   data,
@@ -20,6 +19,5 @@ signif_checker(
 A dataframe with a column describing all statistically significant differences with comparison groups (e.g., Montgomery County, Maryland, and Overall).
 }
 \description{
-Significance check
 Loops through named list of columns containing statistical-significance results, and creates new column describing any statistically significant results.
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_gender_employment_general}
 \alias{process_race_gender_employment_general}
-\title{Process employment by race and gender
-Process ACS5 tidycensus downloaded data on employment by race and gender}
+\title{Process employment by race and gender}
 \usage{
 process_race_gender_employment_general(df)
 }
@@ -14,6 +13,5 @@ process_race_gender_employment_general(df)
 Processed data on employment by race and gender
 }
 \description{
-Process employment by race and gender
 Process ACS5 tidycensus downloaded data on employment by race and gender
 }
