@@ -1,13 +1,13 @@
 Package: acsprocess
 Title: Process tidycensus downloaded ACS data
-Version: 0.0.1.0000
+Version: 0.0.1.100
 Authors@R: 
     person(given = "Dan",
            family = "Powers",
            role = c("aut", "cre"),
            email = "danielp@takomaparkmd.gov",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Set of functions to work with ACS data downloaded from tidycensus. Some functions specific to Takoma Park
+Description: Set of functions to work with ACS data downloaded from tidycensus. Some functions specific to Takoma Park.
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://github.com/City-of-Takoma-Park/acsprocess

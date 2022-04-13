@@ -688,13 +688,39 @@ recode_hous_ppl <- function(df, col_name = hous_ppl){
 
 recode_houstype <- function(df, col_name = hous_type){
   recode_string <- function(string){
-    process <- gsub(" householder, no spouse or partner present:", "", string) %>%
+    process <- gsub(" householder, no (spouse or partner|spouse) present:", "", string) %>%
       gsub(":", "", .) %>%
       gsub("Male", "Single male", .) %>%
       gsub("Female", "Single female", .) %>%
       gsub(" household", "", .) %>%
-      gsub("-", "", .)
+      gsub("-", " ", .) %>%
+      gsub(" family", "", .)
 
+  }
+
+  df %>%
+    dplyr::mutate({{col_name}} := recode_string({{col_name}}))
+}
+
+recode_fam_occupants <- function(df, col_name = fam_occupants){
+  recode_string <- function(string){
+    dplyr::case_when(grepl("With related ", string) ~ "With children",
+              grepl("No related", string) ~ "No children")
+  }
+
+  df %>%
+    dplyr::mutate({{col_name}} := recode_string({{col_name}}))
+
+}
+
+recode_child_age <- function(df, col_name = occupants_age){
+  factor <- c("< 5", "5-17", "< 5 and 5-17", "No children")
+
+  recode_string <- function(string){
+    dplyr::case_when(grepl("years and ", string) ~ factor[3],
+                     grepl("Under 5", string) ~ factor[1],
+                     grepl("5 to 17", string) ~ factor[2],
+                     grepl("No children", string) ~ factor[4])
   }
 
   df %>%

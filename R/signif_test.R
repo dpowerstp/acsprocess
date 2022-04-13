@@ -117,6 +117,7 @@ signif_compare <- function(df,
 }
 
 #' Significance overall
+#'
 #' Function to calculate overall results for a root dataframe, and compare significance of group-differences for a grouped dataframe.
 #'
 #' @param processed_df Processed dataframe where each row represents a group to compare against the overall.
@@ -195,6 +196,7 @@ signif_overall <- function(processed_df,
 
 
 #' Significance check
+#'
 #' Loops through named list of columns containing statistical-significance results, and creates new column describing any statistically significant results.
 #'
 #' @param data Dataframe with columns containing descriptions of significantly significant results against other comparison groups (e.g., another location, overall vs. a group).
@@ -229,6 +231,7 @@ signif_checker <- function(data,
 
 
 #' Process ACS data
+#'
 #' Groups lightly-processed tidycensus/ACS dataframe, and identifies statistical-significance of values comparing Takoma Park to Montgomery County and Maryland.
 #'
 #' @param df Lightly-processed ACS dataframe with estimate and MOE column.

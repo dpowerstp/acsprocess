@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{data_puller}
 \alias{data_puller}
-\title{Data puller
-Function to read in rds data with a common name from a data directory}
+\title{Data puller}
 \usage{
 data_puller(root_string, data_string)
 }
@@ -16,6 +15,5 @@ data_puller(root_string, data_string)
 Dataframe
 }
 \description{
-Data puller
 Function to read in rds data with a common name from a data directory
 }

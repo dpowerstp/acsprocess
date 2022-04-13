@@ -21,8 +21,5 @@ disab_pull(df, new_col = disability, concept_col = concept)
 ACS5 tidycensus downloaded data on disability by type with disability column
 }
 \description{
-Pull disability values from concept column
-
-Pull type of disability
 Creates column on disability by type from ACS5 tidycensus downloaded data on disability by type
 }

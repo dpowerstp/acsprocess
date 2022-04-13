@@ -27,5 +27,5 @@ data_saver(
 Saved dataframe in created output directories associated with year and place data describes
 }
 \description{
-Save dataframe
+Saves dataframe to output directories
 }
