@@ -1030,7 +1030,12 @@ process_tenure_age <- function(df){
                               c("name", "tenure")) %>%
     acsprocess::derive_pct_est_moe("pct_age",
                                    "tenure_tot",
-                                   "tenure_tot_moe")
+                                   "tenure_tot_moe") %>%
+    dplyr::rename(pct_age_moe = pct_moe) %>%
+    # calculate total for location/age group
+    acsprocess::est_moe_derive(c("location", "age"), name_col = "locage") %>%
+    dplyr::mutate(pct_ageten = pct_round(estimate, locage_est)) %>%
+    acsprocess::derive_pct_est_moe(proportion_col = "pct_ageten", aggregate_est = "locage_est", "locage_moe")
 }
 
 #' Base-process home-ownership by race
@@ -1224,10 +1229,10 @@ process_rent_costburden_age <- function(df){
 process_rent_own_costburden_age <- function(rent_df, own_df){
 
   rent <- rent_df %>%
-    acsprocess::process_rent_costburden_age
+    acsprocess::process_rent_costburden_age()
 
   own <- own_df %>%
-    acsprocess::process_own_costburden_age
+    acsprocess::process_own_costburden_age()
 
   join <- rbind(rent, own) %>%
     acsprocess::est_moe_derive(group_cols = c("name"), name_col = "tot_households")
