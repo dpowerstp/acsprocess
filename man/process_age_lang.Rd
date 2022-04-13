@@ -13,5 +13,5 @@ process_age_lang(df)
 processed data on age/English language proficiency
 }
 \description{
-Process age/english language proficiency
+Processes data on age and English language proficiency
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_household_income_rentercosts}
 \alias{process_household_income_rentercosts}
-\title{Process cost-burden by household income for renters
-Processes ACS5 tidycensus downloaded data on cost-burden by household income for renters}
+\title{Process cost-burden by household income for renters}
 \usage{
 process_household_income_rentercosts(df)
 }
@@ -14,6 +13,5 @@ process_household_income_rentercosts(df)
 Processed data on cost burden by household income for renters
 }
 \description{
-Process cost-burden by household income for renters
 Processes ACS5 tidycensus downloaded data on cost-burden by household income for renters
 }

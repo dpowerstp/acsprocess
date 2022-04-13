@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_health_age}
 \alias{process_health_age}
-\title{Process health-insurance by age
-Processes ACS5 tidycensus downloaded data on health insurance by age}
+\title{Process health-insurance by age}
 \usage{
 process_health_age(df)
 }
@@ -14,6 +13,5 @@ process_health_age(df)
 Processed health-insurance by age data
 }
 \description{
-Process health-insurance by age
 Processes ACS5 tidycensus downloaded data on health insurance by age
 }

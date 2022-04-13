@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_income_last12}
 \alias{process_income_last12}
-\title{Process income data
-Processes ACS5 tidycensus downloaded data on income in last 12 months}
+\title{Process income data}
 \usage{
 process_income_last12(df)
 }
@@ -14,6 +13,5 @@ process_income_last12(df)
 Processed data on income in last 12 months
 }
 \description{
-Process income data
 Processes ACS5 tidycensus downloaded data on income in last 12 months
 }

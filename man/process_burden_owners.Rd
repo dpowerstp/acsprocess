@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_burden_owners}
 \alias{process_burden_owners}
-\title{Process cost-burden for homeowners
-Processes ACS5 tidycensus downloaded data on cost burden by owners}
+\title{Process cost-burden for homeowners}
 \usage{
 process_burden_owners(df)
 }
@@ -14,6 +13,5 @@ process_burden_owners(df)
 Processed data on cost burden for owners
 }
 \description{
-Process cost-burden for homeowners
 Processes ACS5 tidycensus downloaded data on cost burden by owners
 }

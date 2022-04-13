@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_employment_age_gender}
 \alias{process_employment_age_gender}
-\title{Process Employment/Age/Gender Data
-Processes ACS5 tidycensus downloaded data on employment by age and gender}
+\title{Process Employment/Age/Gender Data}
 \usage{
 process_employment_age_gender(df)
 }
@@ -14,6 +13,5 @@ process_employment_age_gender(df)
 Processed data on employment by age and gender
 }
 \description{
-Process Employment/Age/Gender Data
 Processes ACS5 tidycensus downloaded data on employment by age and gender
 }

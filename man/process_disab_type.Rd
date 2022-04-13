@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_disab_type}
 \alias{process_disab_type}
-\title{Process disability by type
-Processes ACS5 tidycensus downloaded data on disability by type}
+\title{Process disability by type}
 \usage{
 process_disab_type(df, df_disab_pop)
 }
@@ -16,6 +15,5 @@ process_disab_type(df, df_disab_pop)
 
 }
 \description{
-Process disability by type
 Processes ACS5 tidycensus downloaded data on disability by type
 }

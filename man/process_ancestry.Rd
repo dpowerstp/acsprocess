@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_ancestry}
 \alias{process_ancestry}
-\title{Process ancestry data
-Processes tidycensus downloaded ancestry data}
+\title{Process ancestry data}
 \usage{
 process_ancestry(df, sub = F)
 }
@@ -16,6 +15,5 @@ process_ancestry(df, sub = F)
 Processed tidycensus ancestry data
 }
 \description{
-Process ancestry data
 Processes tidycensus downloaded ancestry data
 }

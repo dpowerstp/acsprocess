@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_family_type_income}
 \alias{process_family_type_income}
-\title{Process family type by income
-Processes tidycensus downloaded ACS5 data on family type by income}
+\title{Process family type by income}
 \usage{
 process_family_type_income(df)
 }
@@ -14,6 +13,5 @@ process_family_type_income(df)
 Processed data on family type by income
 }
 \description{
-Process family type by income
 Processes tidycensus downloaded ACS5 data on family type by income
 }

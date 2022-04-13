@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_home_lang}
 \alias{process_home_lang}
-\title{Process language spoken at home
-Processes ACS5 tidycensus downloaded data on language spoken at home}
+\title{Process language spoken at home}
 \usage{
 process_home_lang(df)
 }
@@ -14,6 +13,5 @@ process_home_lang(df)
 Processed data on language spoken at home
 }
 \description{
-Process language spoken at home
 Processes ACS5 tidycensus downloaded data on language spoken at home
 }

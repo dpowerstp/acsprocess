@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_family}
 \alias{process_family}
-\title{Process family-status data
-Processes tidycensus downloaded ACS5 data on family status}
+\title{Process family-status data}
 \usage{
 process_family(df)
 }
@@ -14,6 +13,5 @@ process_family(df)
 Processed data on family status
 }
 \description{
-Process family-status data
 Processes tidycensus downloaded ACS5 data on family status
 }

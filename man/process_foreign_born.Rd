@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_foreign_born}
 \alias{process_foreign_born}
-\title{Process foreign born
-Processes tidycensys downloaded data on birthplace}
+\title{Process foreign born}
 \usage{
 process_foreign_born(df)
 }
@@ -14,6 +13,5 @@ process_foreign_born(df)
 processed dataframe on birth by location
 }
 \description{
-Process foreign born
-Processes tidycensys downloaded data on birthplace
+Processes tidycensus downloaded data on birthplace
 }

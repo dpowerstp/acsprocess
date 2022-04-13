@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_disability_pop}
 \alias{process_disability_pop}
-\title{Process disability as percent of population
-Processes ACS5 tidycensus downloaded data on disability, calculating percentages of place's population}
+\title{Process disability as percent of population}
 \usage{
 process_disability_pop(df_disability)
 }
@@ -14,6 +13,5 @@ process_disability_pop(df_disability)
 
 }
 \description{
-Process disability as percent of population
 Processes ACS5 tidycensus downloaded data on disability, calculating percentages of place's population
 }

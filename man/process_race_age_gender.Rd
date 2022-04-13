@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_age_gender}
 \alias{process_race_age_gender}
-\title{Process race, age, gender
-Processes tidycensus downloaded race, age, and gender data}
+\title{Process race, age, gender}
 \usage{
 process_race_age_gender(df)
 }
@@ -14,6 +13,5 @@ process_race_age_gender(df)
 Processed race, age, and gender data
 }
 \description{
-Process race, age, gender
 Processes tidycensus downloaded race, age, and gender data
 }

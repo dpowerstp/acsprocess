@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_poverty_race_age}
 \alias{process_poverty_race_age}
-\title{Process poverty by race and age data
-Processes tidycensus downloaded ACS5 data on poverty by race by age}
+\title{Process poverty by race and age data}
 \usage{
 process_poverty_race_age(df)
 }
@@ -14,6 +13,5 @@ process_poverty_race_age(df)
 Processes data on poverty by race by age
 }
 \description{
-Process poverty by race and age data
 Processes tidycensus downloaded ACS5 data on poverty by race by age
 }

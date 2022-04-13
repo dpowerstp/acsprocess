@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_educ_race}
 \alias{process_educ_race}
-\title{Process educational attainment by race
-ACS5 tidycensus downloaded data on educational attainment by race}
+\title{Process educational attainment by race}
 \usage{
 process_educ_race(df)
 }
@@ -14,6 +13,5 @@ process_educ_race(df)
 Processed data on educational attainment by race
 }
 \description{
-Process educational attainment by race
 ACS5 tidycensus downloaded data on educational attainment by race
 }

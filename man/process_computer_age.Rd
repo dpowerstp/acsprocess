@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_computer_age}
 \alias{process_computer_age}
-\title{Process Computer/Internet by Age
-Processes ACS5 tidycensus downloaded data on computer/internet usage by age}
+\title{Process Computer/Internet by Age}
 \usage{
 process_computer_age(df)
 }
@@ -14,6 +13,5 @@ process_computer_age(df)
 Processed data on computer/internet usage by age
 }
 \description{
-Process Computer/Internet by Age
 Processes ACS5 tidycensus downloaded data on computer/internet usage by age
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_income_race_median}
 \alias{process_income_race_median}
-\title{Process median income by race
-Processes ACS5 tidycensus downloaded data on household median income by race}
+\title{Process median income by race}
 \usage{
 process_income_race_median(df)
 }
@@ -14,6 +13,5 @@ process_income_race_median(df)
 Processed data on median income by race
 }
 \description{
-Process median income by race
 Processes ACS5 tidycensus downloaded data on household median income by race
 }

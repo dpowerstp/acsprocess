@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_computer_overall}
 \alias{process_computer_overall}
-\title{Process Computer/Internet Data
-Processes tidycensus downloaded data on computer/internet usage}
+\title{Process Computer/Internet Data}
 \usage{
 process_computer_overall(df)
 }
@@ -14,6 +13,5 @@ process_computer_overall(df)
 processed data on computer/internet usage
 }
 \description{
-Process Computer/Internet Data
 Processes tidycensus downloaded data on computer/internet usage
 }

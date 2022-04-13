@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_family_tenure}
 \alias{process_family_tenure}
-\title{Process family-type by tenure
-Processes tidycensus downloaded ACS5 data on family-type by tenure data}
+\title{Process family-type by tenure}
 \usage{
 process_family_tenure(df)
 }
@@ -14,6 +13,5 @@ process_family_tenure(df)
 tidycensus downloaded ACS5 data on family-type by tenure
 }
 \description{
-Process family-type by tenure
 Processes tidycensus downloaded ACS5 data on family-type by tenure data
 }

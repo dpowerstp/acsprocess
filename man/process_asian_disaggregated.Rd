@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_asian_disaggregated}
 \alias{process_asian_disaggregated}
-\title{Process Asian ethnicity
-Processes tidycensus downloaded data on Asian ethnicity}
+\title{Process Asian ethnicity}
 \usage{
 process_asian_disaggregated(df)
 }
@@ -14,6 +13,5 @@ process_asian_disaggregated(df)
 processed data on Asian ethnicity
 }
 \description{
-Process Asian ethnicity
 Processes tidycensus downloaded data on Asian ethnicity
 }

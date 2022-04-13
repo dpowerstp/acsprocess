@@ -13,5 +13,5 @@ process_educ_race_gender(df)
 Processed data on educational attainment by race and sex
 }
 \description{
-Process education/race/sex data
+Processes tidycensus downloaded data on educational attainment by race and sex
 }

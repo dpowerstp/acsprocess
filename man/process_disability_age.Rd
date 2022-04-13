@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_disability_age}
 \alias{process_disability_age}
-\title{Process disability by age
-Processes ACS5 tidycensus downloaded data on rates of disability by age}
+\title{Process disability by age}
 \usage{
 process_disability_age(df_disability)
 }
@@ -14,6 +13,5 @@ process_disability_age(df_disability)
 Processed data on disability by age
 }
 \description{
-Process disability by age
 Processes ACS5 tidycensus downloaded data on rates of disability by age
 }

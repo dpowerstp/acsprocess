@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_health_race}
 \alias{process_health_race}
-\title{Process health insurance by race
-Processes ACS5 tidycensus downloaded data on health insurance by race}
+\title{Process health insurance by race}
 \usage{
 process_health_race(df)
 }
@@ -14,6 +13,5 @@ process_health_race(df)
 Processed data on health insurance by race
 }
 \description{
-Process health insurance by race
 Processes ACS5 tidycensus downloaded data on health insurance by race
 }

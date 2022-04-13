@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_race_computer}
 \alias{process_race_computer}
-\title{Process Computer Usage by Race
-Processes ACS5 tidycensus downloaded data on computer/internet usage by race}
+\title{Process Computer Usage by Race}
 \usage{
 process_race_computer(df)
 }
@@ -14,6 +13,5 @@ process_race_computer(df)
 processed data on computer/internet usage by race
 }
 \description{
-Process Computer Usage by Race
 Processes ACS5 tidycensus downloaded data on computer/internet usage by race
 }

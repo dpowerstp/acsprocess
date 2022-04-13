@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_poverty}
 \alias{process_poverty}
-\title{Process poverty data
-Processes tidycensus downloaded ACS5 data on poverty}
+\title{Process poverty data}
 \usage{
 process_poverty(df)
 }
@@ -14,6 +13,5 @@ process_poverty(df)
 Processed data on poverty
 }
 \description{
-Process poverty data
 Processes tidycensus downloaded ACS5 data on poverty
 }

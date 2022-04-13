@@ -2,8 +2,7 @@
 % Please edit documentation in R/signif_test.R
 \name{process_df}
 \alias{process_df}
-\title{Process ACS data
-Groups lightly-processed tidycensus/ACS dataframe, and identifies statistical-significance of values comparing Takoma Park to Montgomery County and Maryland.}
+\title{Process ACS data}
 \usage{
 process_df(
   df,
@@ -31,6 +30,5 @@ process_df(
 
 }
 \description{
-Process ACS data
 Groups lightly-processed tidycensus/ACS dataframe, and identifies statistical-significance of values comparing Takoma Park to Montgomery County and Maryland.
 }

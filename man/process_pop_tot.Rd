@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_pop_tot}
 \alias{process_pop_tot}
-\title{Population totals from race/ethnicity
-Grab population totals from processed race/ethnciity data}
+\title{Population totals from race/ethnicity}
 \usage{
 process_pop_tot(race_ethn_processed_df)
 }
@@ -14,6 +13,5 @@ process_pop_tot(race_ethn_processed_df)
 Dataframe with population totals for given place
 }
 \description{
-Population totals from race/ethnicity
 Grab population totals from processed race/ethnciity data
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/process_functions.R
 \name{process_disability_overall}
 \alias{process_disability_overall}
-\title{Process disability overall
-Processes ACS5 tidycensus downloaded data on disability overall}
+\title{Process disability overall}
 \usage{
 process_disability_overall(df)
 }
@@ -14,6 +13,5 @@ process_disability_overall(df)
 Processed data on disability overall with disability column
 }
 \description{
-Process disability overall
 Processes ACS5 tidycensus downloaded data on disability overall
 }
