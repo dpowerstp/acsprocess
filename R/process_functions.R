@@ -115,7 +115,7 @@ process_race_ethn <- function(df){
   race_ethn_processed <- race_ethn_processed %>%
     dplyr::mutate(race_ethnicity = ifelse(two == "White alone" & !is.na(two), "NH White alone", race_ethnicity),
            two = ifelse(two == "White alone", NA, two)) %>%
-    filter(is.na(two) & (!is.na(race_ethnicity) | !grepl("HISPANIC", concept, ignore.case = T)))
+    dplyr::filter(is.na(two) & (!is.na(race_ethnicity) | !grepl("HISPANIC", concept, ignore.case = T)))
 
   # browser()
 
@@ -629,7 +629,17 @@ process_income_last12 <- function(df){
 process_age_income <- function(df){
   df %>%
     acsprocess::separate_label(c(NA, NA, "age", "income")) %>%
-    acsprocess::total_col_add(list("households" = "age", "agehous"= "income"), join_col = c("name", "age"))
+    acsprocess::total_col_add(list("households" = "age", "agehous"= "income"), join_col = c("name", "age")) %>%
+    dplyr::mutate(age_new = gsub("Householder ", "", age)) %>%
+    dplyr::mutate(pct_agehous = pct_round(estimate, agehous)) %>%
+    acsprocess::derive_pct_est_moe("pct_agehous", "agehous", "agehous_moe") %>%
+    dplyr::group_by(name, age) %>%
+    acsprocess::income_recode(income_col = income) %>%
+    dplyr::arrange(income_recode) %>%
+    dplyr::mutate(cuml_agehous = cumsum(estimate),
+           cuml_agehous_pct = round(cuml_agehous * 100 / agehous, 2)) %>%
+    dplyr::ungroup() %>%
+    acsprocess::age_recode(age_new)
 }
 
 
@@ -1599,6 +1609,45 @@ process_race_disability <- function(df){
                                    component_est = "name_race_disability_est",
                                    component_moe = "name_race_disability_moe")
 }
+
+
+# veteran status ----
+
+#' Base-process veteran-status by sex and age
+#'
+#' Conducts base-processing of veteran status by sex and age. This dataset is formatted oddly (separated-columns are somewhat inconsistent), so just separates label into sex, age, and veteran columns
+#'
+#' @param df Tidycensus ACS5 dataframe on veteran status by age and sex
+#'
+#' @return Label-separated ACS5 dataframe on veteran status by age and sex
+#' @export
+#'
+#' @examples
+base_process_vetagesex <- function(df){
+  df %>%
+    acsprocess::separate_label(c(NA, NA, "sex", "age", "veteran"))
+}
+
+#' Process veteran-status by sex and age dataset into veteran-status by age
+#'
+#' Processes unprocessed veteran-status by sex and age dataset, turning it into a dataset of veteran-status by age
+#'
+#' @param df Unprocessed ACS5 veteran-status by sex and age dataset
+#' @param bindoverall Default "age"; set to NULL to not add an extra row to the dataset containing results for veteran-status for the overall population
+#'
+#' @return Processed datset of veteran-status by sex and age
+#' @export
+#'
+#' @examples
+process_vetage <- function(df, bindoverall = "age"){
+  df %>%
+    acsprocess::base_process_vetagesex() %>%
+    dplyr::filter(!grepl("veteran", sex, ignore.case = T) & !grepl("veteran", age, ignore.case = T)) %>%
+    acsprocess::total_col_add(list("poptot" = "sex", "sextot" = "age", "agetot" = "veteran"), join_col = c("name", "sex", "age")) %>%
+    acsprocess::process_df(group_cols = c("name", "age", "veteran"), overall_cols = c("name", "veteran"), name_col = "agevet", bind_overall = bindoverall)  %>%
+    acsprocess::age_recode(age)
+}
+
 
 
 # sex ----

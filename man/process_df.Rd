@@ -16,19 +16,19 @@ process_df(
 \arguments{
 \item{df}{Lightly-processed ACS dataframe with estimate and MOE column.}
 
-\item{group_cols}{Columns to group ACS dataframe by.}
+\item{group_cols}{String vector of columns to group ACS dataframe by. E.g., if the dataset contains information on veteran status by age and sex, and you want a dataframe with information on veteran status by age, you'd enter c("age", "veteran").}
 
-\item{overall_cols}{The set of columns to calculate overall results for. E.g., if you want to see how age groups differ from overall rates of access, you would enter the computer access column as the group col.}
+\item{overall_cols}{String vector of columns to calculate overall results for. E.g., if you want to see how computer access by age groups differ from overall rates of computer access, you would enter the computer access column as the group col.}
 
-\item{name_col}{Base-name of column to store values in for grouped dataframe.}
+\item{name_col}{String base-name of column to store values in for grouped dataframe.}
 
-\item{bind_overall}{Whether to add overall results as a row to the processed dataframe. Should enter name of column with groups comparing against (e.g., if comparing ages against overall, should enter age).}
+\item{bind_overall}{Whether to add overall results as a row to the processed dataframe. Default NULL. To add an overall row, should enter the string name of the column containing groups comparing against (e.g., if comparing ages against overall, should enter age; in the new row, the age column will have a value of "Overall").}
 
 \item{root_df}{If the df has already been processed more, the base-dataframe from which the df was processed.}
 }
 \value{
-
+Dataframe grouped by group columns, with statistical significance of differences from overall_cols.
 }
 \description{
-Groups lightly-processed tidycensus/ACS dataframe, and identifies statistical-significance of values comparing Takoma Park to Montgomery County and Maryland.
+Groups lightly-processed tidycensus/ACS dataframe, and identifies statistical-significance of values comparing subgroups to an overall group.
 }

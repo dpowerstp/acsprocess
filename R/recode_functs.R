@@ -557,8 +557,8 @@ income_recode <- function(df, income_col, new_income = "income_recode", rent_own
   if (rent_own){
 
     rent_own_replacer <- function(string){
-      recode(string, "100k-149k" = "Owner: 100k-$150k \n Renter: > 100k",
-             "> 100k" = "Owner: 100k-$150k \n Renter: > 100k")
+      recode(string, "100k-149k" = "Owner: 100k-150k \n Renter: > 100k",
+             "> 100k" = "Owner: 100k-150k \n Renter: > 100k")
     }
 
     df <- df %>%
