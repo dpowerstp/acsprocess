@@ -11,9 +11,6 @@ process_disab_type(df, df_disab_pop)
 
 \item{df_disab_pop}{Data on disability as percent of population}
 }
-\value{
-
-}
 \description{
 Processes ACS5 tidycensus downloaded data on disability by type
 }

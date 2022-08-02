@@ -1688,6 +1688,31 @@ process_age_gender <- function(df){
                        "tot_gender_moe")
 }
 
+#' Process age data
+#'
+#' Processes tidycensus downloaded age data, table B01001
+#'
+#' @param df Dataframe containing SEX BY AGE table, table B01001 in 2020 5-year ACS
+#'
+#' @return Dataframe grouped by age group at given geography
+#' @export
+#'
+#' @examples
+process_age_overall <- function(df){
+  df %>%
+    acsprocess::separate_label(c(NA, NA, "gender", "age")) %>%
+    acsprocess::total_col_add(c("tot_people" = "gender", "tot_gender" = "age"), c("name", "gender")) %>%
+    acsprocess::est_moe_derive(c("name", "age"), name_col = "age_tot") %>%
+    dplyr::select(name, location, tot_people, tot_people_moe, age, age_tot_est, age_tot_moe) %>%
+    dplyr::distinct() %>%
+    acsprocess::derive_pct_est_moe("pct_age",
+                       "tot_people",
+                       "tot_people_moe",
+                       "age_tot_est",
+                       "age_tot_moe")
+
+}
+
 # poverty ----
 
 #' Process poverty by race and age data

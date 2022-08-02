@@ -16,8 +16,6 @@ disab_pull(df, new_col = disability, concept_col = concept)
 \item{concept_col}{Data-masked name of concept column; default concept}
 }
 \value{
-
-
 ACS5 tidycensus downloaded data on disability by type with disability column
 }
 \description{

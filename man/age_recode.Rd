@@ -14,9 +14,6 @@ age_recode(df, age_col, regroup = "decennial")
 
 \item{regroup}{Whether to regroup-age values. Accepts "decennial" for decennial Census results, "race_age" for regrouping race/age column, and "sex_age" for regrouping sex/age groups.}
 }
-\value{
-
-}
 \description{
 Age recode
 Function to recode age-values in ACS dataframe, removing extraneous text and ordering column as factor

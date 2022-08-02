@@ -15,9 +15,6 @@ income_recode(df, income_col, new_income = "income_recode", rent_own = F)
 
 \item{rent_own}{Whether to revalue the 100k income range to be inclusive of different income ranges for owners and renters (i.e., if you want to compare renter and owner incomes).}
 }
-\value{
-
-}
 \description{
 Creates shortened names for incomes in tidycensus downloaded ACS data
 }
