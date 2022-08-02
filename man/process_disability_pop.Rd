@@ -9,9 +9,6 @@ process_disability_pop(df_disability)
 \arguments{
 \item{df_disability}{ACS5 tidycensus downloaded data on percentages of people with a disability}
 }
-\value{
-
-}
 \description{
 Processes ACS5 tidycensus downloaded data on disability, calculating percentages of place's population
 }

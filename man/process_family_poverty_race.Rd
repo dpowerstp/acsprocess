@@ -9,9 +9,6 @@ process_family_poverty_race(df)
 \arguments{
 \item{df}{tidycensus downloaded ACS5 data on family-status by poverty and race}
 }
-\value{
-
-}
 \description{
 Processes tidycensus downloaded ACS5 data on family-status by poverty and race
 }
