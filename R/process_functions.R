@@ -2242,4 +2242,76 @@ process_race_transport_complete <- function(df) {
                        aggregate_moe = "race_total_moe")
 }
 
+#' Process vehicle-ownership data by tenure
+#'
+#' Processes tidycensus-downloaded tenure by number of vehicles owned data, table B25044 in 2020 5-year ACS
+#'
+#' @param df Dataframe on number of vehicles owned by tenure, reflecting table B25044 in 2020 5-year ACS
+#' @param overall Whether to aggregate data up to level of owning a vehicle (without tenure); default FALSE
+#'
+#' @return Processed-dataframe on vehicle ownership by tenure, or households by vehicle ownership
+#' @export
+#'
+#' @examples
+process_tenure_vehicleown <- function(df, overall = F){
+
+  vehicledf <- df %>%
+    acsprocess::separate_label(c(NA, NA, "tenure", "vehicle")) %>%
+    acsprocess::total_col_add(total_cols = c("tothous" = "tenure", "tottenure" = "vehicle"), join_col = c("name", "tenure"))
+
+  if (overall){
+    vehicledf <- vehicledf %>%
+      acsprocess::est_moe_derive(
+        group_cols = c("name", "vehicle")
+      ) %>%
+      dplyr::select(geoid, name, vehicle, tothous, tothous_moe, name_vehicle_est, name_vehicle_moe) %>%
+      dplyr::distinct() %>%
+      dplyr::rename(
+        estimate = name_vehicle_est,
+        moe = name_vehicle_moe
+      ) %>%
+      acsprocess::derive_pct_est_moe(proportion_col = "pct_vehicle", aggregate_est = "tothous", aggregate_moe = "tothous_moe") %>%
+      dplyr::mutate(
+        anyvehicle = dplyr::case_when(
+          vehicle == "No vehicle available" ~ "No vehicle",
+          TRUE ~ "Owns a vehicle"
+        )
+      ) %>%
+      acsprocess::est_moe_derive(
+        group_cols = c("name", "anyvehicle"),
+        name_col = "anyveh"
+      ) %>%
+      acsprocess::derive_pct_est_moe(proportion_col = "pct_anyveh",
+                                     "tothous",
+                                     "tothous_moe",
+                                     "anyveh_est",
+                                     "anyveh_moe")
+  }
+
+  else {
+    vehicledf <- vehicledf %>%
+      acsprocess::derive_pct_est_moe("pct_vehicle",
+                                     "tottenure",
+                                     "tottenure_moe") %>%
+      dplyr::mutate(
+        anyvehicle = dplyr::case_when(
+          vehicle == "No vehicle available" ~ "No vehicle",
+          TRUE ~ "Owns a vehicle"
+        )
+      ) %>%
+      acsprocess::est_moe_derive(
+        group_cols = c("name", "tenure", "anyvehicle"),
+        name_col = "anyveh"
+      ) %>%
+      acsprocess::derive_pct_est_moe(proportion_col = "pct_anyveh",
+                                     "tottenure",
+                                     "tottenure_moe",
+                                     "anyveh_est",
+                                     "anyveh_moe")
+
+  }
+
+  vehicledf
+}
+
 
