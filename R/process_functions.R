@@ -1519,6 +1519,46 @@ process_disab_sex <- function(df, df_disab_sex){
     dplyr::rename(pct_moe_sex = pct_moe)
 }
 
+
+#' Process foodstamp and disability status data
+#'
+#' Processes tidycensus-downloaded data from table B22010 on household food-stamp receipt by disability status. Option to calculate overall-results for household disability status, since other Census tables on disability are not available at the block-group level
+#'
+#' @param df tidycensus-downloaded data on household food-stamp receipt by disability status, census table B22010
+#' @param overall Whether to aggregate dataframe to households by presence of person with a disability; default F
+#'
+#' @return Processed dataframe on household food-stamp receipt by disability status, or households by presence of person with a disability
+#' @export
+#'
+#' @examples
+process_disab_foodstamp <- function(df, overall = F){
+  disabdf <- df %>%
+    acsprocess::separate_label(names_vector = c(NA, NA, "foodstamp", "disab")) %>%
+    acsprocess::total_col_add(total_cols = c("tothous" = "foodstamp", "totfood" = "disab"), join_col = c("name", "foodstamp"))
+
+  if (overall){
+    disabdf <- disabdf %>%
+      acsprocess::est_moe_derive(group_cols = c("name", "disab")) %>%
+      dplyr::select(geoid, name, tothous, tothous_moe, disab, name_disab_est, name_disab_moe) %>%
+      dplyr::rename(estimate = name_disab_est,
+                    moe = name_disab_moe) %>%
+      acsprocess::derive_pct_est_moe(
+        proportion_col = "pct_disab",
+        aggregate_est = "tothous",
+        aggregate_moe = "tothous_moe"
+      )
+  }
+
+  else {
+    disabdf <- disabdf %>%
+      acsprocess::derive_pct_est_moe(proportion_col = "pct_disabfood", aggregate_est = "totfood", aggregate_moe = "totfood_moe")
+
+  }
+
+  disabdf
+
+}
+
 #' Process disability by age
 #'
 #' Processes ACS5 tidycensus downloaded data on disability by age
