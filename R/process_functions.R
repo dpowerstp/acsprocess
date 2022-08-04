@@ -1739,17 +1739,19 @@ process_age_gender <- function(df){
 #'
 #' @examples
 process_age_overall <- function(df){
+  loccols <- grep("(^location$)|(^name$)", colnames(df), value = T)
+
   df %>%
     acsprocess::separate_label(c(NA, NA, "gender", "age")) %>%
     acsprocess::total_col_add(c("tot_people" = "gender", "tot_gender" = "age"), c("name", "gender")) %>%
     acsprocess::est_moe_derive(c("name", "age"), name_col = "age_tot") %>%
-    dplyr::select(name, location, tot_people, tot_people_moe, age, age_tot_est, age_tot_moe) %>%
+    dplyr::select(geoid, tidyselect::all_of(loccols), tot_people, tot_people_moe, age, age_tot_est, age_tot_moe) %>%
     dplyr::distinct() %>%
+    dplyr::rename(estimate = age_tot_est,
+                  moe = age_tot_moe) %>%
     acsprocess::derive_pct_est_moe("pct_age",
                        "tot_people",
-                       "tot_people_moe",
-                       "age_tot_est",
-                       "age_tot_moe")
+                       "tot_people_moe")
 
 }
 
