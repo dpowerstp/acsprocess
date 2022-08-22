@@ -37,3 +37,61 @@ acs_load <- function(geog, state, vars_load, year_val = 2019){
   return(tp_data)
 
 }
+
+
+#' Pull ACS Data
+#'
+#' Function for downloading acs data at given geography and year
+#'
+#' @param varlist Vector of variables to download
+#' @param filename String to save file as
+#' @param year ACS5 year to download data from; default 2020
+#' @param geog Geography of data to download; default block group
+#' @param varscensus tidycensus downloaded variable names using tidycensus::load_variables; default NULL, which loads in ACS5 variables to merge
+#' @param state tidycensus state; default "Maryland"
+#'
+#' @return Creates data directories to save loaded ACS5 data in
+#' @export
+#'
+#' @examples
+acspull <- function(varlist, filename, year = 2020, geog = "block group", varscensus = NULL, state = "Maryland"){
+
+  if (is.null(varcensus)){
+
+    varscensus <- tidycensus::load_variables(year = year, "acs5", cache = T)
+
+  }
+
+  acsdata <- tidycensus::get_acs(
+    year= 2020,
+    variables = varlist,
+    geography = geog,
+    survey= "acs5",
+    state = state,
+    geometry = F,
+    cache_table = T
+  ) %>%
+    rename_all(tolower)
+
+  # browser()
+  # join
+  acsdata <- acsdata %>%
+    dplyr::left_join(varscensus, by = c("variable" = "name"))
+
+  # create directory to store data if not exist
+  if (!dir.exists(paths = paste0("./data/", year, "/", geog))){
+    dir.create(paste0("./data/", year, "/", geog))
+  }
+
+  # save data
+  saveRDS(object = acsdata,
+          file = paste0("./data/",
+                        year,
+                        "/",
+                        geog,
+                        "/",
+                        filename,
+                        ".rds"))
+
+}
+
