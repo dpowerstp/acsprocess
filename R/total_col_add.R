@@ -38,14 +38,14 @@ total_col_add <- function(df,
 
     # filter to total
     total_df <- return_df %>%
-      dplyr::filter(is.na(!!sym(select_tot_col)))
+      dplyr::filter(is.na(!!dplyr::sym(select_tot_col)))
 
     # update moe to 0 if missing - per this discussion - https://github.com/walkerke/tidycensus/issues/29
 
     # pull total value and moe for that (na value of subgroup column = total for that group
     total_df <- total_df %>%
-      dplyr::mutate(!!sym(select_cols_name) := !!sym(est_col),
-                    !!sym(group_moe) := ifelse(is.na(moe), 0, moe))
+      dplyr::mutate(!!dplyr::sym(select_cols_name) := !!dplyr::sym(est_col),
+                    !!dplyr::sym(group_moe) := ifelse(is.na(moe), 0, moe))
 
     # filter to total column and its moe as well as column to rejoin data by
     total_df <- total_df %>%
@@ -54,7 +54,7 @@ total_col_add <- function(df,
     # join total data to df and filter out total-row
     return_df <<- return_df %>%
       dplyr::left_join(total_df) %>%
-      dplyr::filter(!is.na(!!sym(select_tot_col)))
+      dplyr::filter(!is.na(!!dplyr::sym(select_tot_col)))
 
   })
 

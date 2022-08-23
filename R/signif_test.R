@@ -87,8 +87,8 @@ signif_compare <- function(df,
   filter_df <- filter_df %>%
     dplyr::select({{join_col}}, {{ est_col }}, {{ moe_col }}) %>%
     dplyr::distinct() %>%
-    dplyr::rename(!!sym(est_filter) := {{ est_col }},
-           !!sym(moe_filter) := {{ moe_col }})
+    dplyr::rename(!!dplyr::sym(est_filter) := {{ est_col }},
+           !!dplyr::sym(moe_filter) := {{ moe_col }})
 
   if (nrow(filter_df) == 0){
     stop("Error; empty filtered dataframe; check filter column")
@@ -98,14 +98,14 @@ signif_compare <- function(df,
   # calculate statistical significance
   return_df <- df %>%
     dplyr::left_join(filter_df) %>%
-    dplyr::mutate(!!sym(crit_filter) := acsprocess::signif_test({{ est_col }},
-                                             !!sym(est_filter),
+    dplyr::mutate(!!dplyr::sym(crit_filter) := acsprocess::signif_test({{ est_col }},
+                                             !!dplyr::sym(est_filter),
                                              {{ moe_col }},
-                                             !!sym(moe_filter))[[1]],
-           !!sym(signif_filter) := acsprocess::signif_test({{ est_col }},
-                                               !!sym(est_filter),
+                                             !!dplyr::sym(moe_filter))[[1]],
+           !!dplyr::sym(signif_filter) := acsprocess::signif_test({{ est_col }},
+                                               !!dplyr::sym(est_filter),
                                                {{ moe_col }},
-                                               !!sym(moe_filter))[[2]])
+                                               !!dplyr::sym(moe_filter))[[2]])
 
   if (nrow(return_df) > nrow(df)){
     browser()
@@ -181,7 +181,7 @@ signif_overall <- function(processed_df,
     # browser()
     overall_df_bind <- overall_df %>%
       dplyr::ungroup() %>%
-      dplyr::mutate(!!sym(bind_overall) := "Overall") %>%
+      dplyr::mutate(!!dplyr::sym(bind_overall) := "Overall") %>%
       dplyr::select(group_cols, bind_overall, pct_overall, pct_moe) %>%
       dplyr::rename({{ est_col }} := pct_overall,
              {{ moe_col }} := pct_moe)
@@ -218,7 +218,7 @@ signif_checker <- function(data,
   purrr::walk2(signif_cols, names(signif_cols), ~ {
     data <<- data %>%
       dplyr::mutate(signif_check = paste0(signif_check,
-                                   dplyr::case_when(is.na(!!sym(.x)) ~ "",
+                                   dplyr::case_when(is.na(!!dplyr::sym(.x)) ~ "",
                                              TRUE ~ paste0(", ", .y))))
   })
 
@@ -282,7 +282,7 @@ process_df <- function(df,
                                    name_moe) %>%
     acsprocess::signif_overall(root_df = root_df,
                                group_cols = overall_cols,
-                               est_col = !!sym(name_pct),
+                               est_col = !!dplyr::sym(name_pct),
                                moe_col = pct_moe,
                                bind_overall = bind_overall)
 
