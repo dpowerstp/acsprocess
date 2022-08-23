@@ -10,7 +10,8 @@ acspull(
   year = 2020,
   geog = "block group",
   varscensus = NULL,
-  state = "Maryland"
+  state = "Maryland",
+  basedir = "./data"
 )
 }
 \arguments{

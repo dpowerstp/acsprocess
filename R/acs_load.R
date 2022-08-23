@@ -81,9 +81,10 @@ acspull <- function(varlist, filename, year = 2020, geog = "block group", varsce
   stateabbr <- state.abb[grep(state, state.name)]
 
   # create directory to store data if not exist
-  if (!dir.exists(paths = paste0(basedir, "/", year, "/", geog))){
-    dir.create(paste0(basedir, "/", year, "/", stateabbr, "/", geog))
-  }
+  acsprocess::quickdircreate(basedir)
+  acsprocess::quickdircreate(paste0(basedir, "/", year))
+  acsprocess::quickdircreate(paste0(basedir, "/", year, "/", stateabbr, "/"))
+  acsprocess::quickdircreate(paste0(basedir, "/", year, "/", stateabbr, "/", geog))
 
   # save data
   saveRDS(object = acsdata,
@@ -99,4 +100,24 @@ acspull <- function(varlist, filename, year = 2020, geog = "block group", varsce
                         ".rds"))
 
 }
+
+
+#' Check if directory exists and create it if not
+#'
+#' Checks if directory exists and create it if not
+#'
+#' @param dirpath Path to directory checking exists and creating if not
+#'
+#' @return Created directory
+#' @export
+#'
+#' @examples
+quickdircreate <- function(dirpath){
+
+  if (!dir.exists(dirpath)){
+    dir.create(dirpath)
+  }
+
+}
+
 
