@@ -1532,6 +1532,7 @@ process_disab_sex <- function(df, df_disab_sex){
 #'
 #' @examples
 process_disab_foodstamp <- function(df, overall = F){
+
   disabdf <- df %>%
     acsprocess::separate_label(names_vector = c(NA, NA, "foodstamp", "disab")) %>%
     acsprocess::total_col_add(total_cols = c("tothous" = "foodstamp", "totfood" = "disab"), join_col = c("name", "foodstamp"))
@@ -1728,6 +1729,8 @@ process_age_gender <- function(df){
                        "tot_gender_moe")
 }
 
+# age ----
+
 #' Process age data
 #'
 #' Processes tidycensus downloaded age data, table B01001
@@ -1752,6 +1755,38 @@ process_age_overall <- function(df){
     acsprocess::derive_pct_est_moe("pct_age",
                        "tot_people",
                        "tot_people_moe")
+
+}
+
+#' Process sex/age to under 18 and over 65
+#'
+#' Recodes age/sex data to produce a dataset showing the total people under age 18, between 18 and 65, and 65+
+#'
+#' @param df_agesex tidycensus downloaded/unprocessed age/sex dataframe
+#'
+#' @return Processed dataframe with age recoded to under 18, between 18 and 65, and 65+
+#' @export
+#'
+#' @examples
+process_age_un18over65 <- function(df_agesex){
+
+  df_agesex %>%
+    acsprocess::process_age_overall() %>%
+    dplyr::mutate(
+      agegrp = dplyr::case_when(
+        grepl("(^Under)|(^[1-9] to)|(^1[0-7] )", age) ~ "Under 18",
+        grepl("(^6[5-9] )|(^[7-9][0-9] )|(over$)", age) ~ "65 and over",
+        T ~ "18-65"
+      )
+    ) %>%
+    acsprocess::est_moe_derive(group_cols = c("name", "agegrp")) %>%
+    dplyr::select(
+      geoid, name, agegrp, tot_people, tot_people_moe, name_agegrp_est, name_agegrp_moe
+    ) %>%
+    dplyr::distinct() %>%
+    dplyr::rename(estimate = name_agegrp_est,
+                  moe = name_agegrp_moe) %>%
+    acsprocess::derive_pct_est_moe("pct_age", "tot_people", "tot_people_moe")
 
 }
 
@@ -1798,6 +1833,37 @@ process_poverty_detail <- function(df){
     acsprocess::derive_pct_est_moe("pct_incpov",
                        "pop_tot",
                        "pop_tot_moe")
+}
+
+#' Process income-poverty df to under 1 and under 2x ratio
+#'
+#' Processes tidycensus downloaded income-poverty ratio dataset to show under 1x the poverty level and under 2x the poverty level
+#'
+#' @param df_povratio tidycensus downloaded income-poverty ratio dataset
+#'
+#' @return Income-poverty ratio dataset with totals of under the poverty level and 2 times the poverty level
+#' @export
+#'
+#' @examples
+process_incpov_un1un2 <- function(df_povratio){
+
+  df %>%
+    acsprocess::process_poverty_detail() %>%
+    acsprocess::incpov_recode(incpov_ratio) %>%
+    dplyr::group_by(name) %>%
+    arrange(incpov_new) %>%
+    dplyr::mutate(estimate = cumsum(estimate),
+                  pct_incpov = estimate/ pop_tot) %>%
+    dplyr::ungroup() %>%
+    dplyr::filter(incpov_new %in% c(".50 to .99", "1.85 to 1.99")) %>%
+    dplyr::mutate(incpov_ratio = dplyr::case_when(
+      incpov_new == ".50 to .99" ~ "Under poverty line",
+      incpov_new == "1.85 to 1.99"~ "Under 2X poverty line"
+    )) %>%
+    dplyr::mutate(
+      dplyr::across(grep("^pct_", colnames(.), value = T),
+             ~ round(.x * 100, 2))
+    )
 }
 
 #' Process poverty by sex data
@@ -2287,7 +2353,12 @@ process_tenure_vehicleown <- function(df, overall = F){
                                      "tothous",
                                      "tothous_moe",
                                      "anyveh_est",
-                                     "anyveh_moe")
+                                     "anyveh_moe") %>%
+      dplyr::select(geoid, name, tothous, tothous_moe, anyvehicle, anyveh_est, anyveh_moe, pct_anyveh, pct_moe, pct_upper, pct_lower) %>%
+      dplyr::distinct() %>%
+      rename(estimate = anyveh_est,
+             moe = anyveh_moe)
+
   }
 
   else {

@@ -54,7 +54,7 @@ acs_load <- function(geog, state, vars_load, year_val = 2019){
 #' @export
 #'
 #' @examples
-acspull <- function(varlist, filename, year = 2020, geog = "block group", varscensus = NULL, state = "Maryland"){
+acspull <- function(varlist, filename, year = 2020, geog = "block group", varscensus = NULL, state = "Maryland", basedir = "./data"){
 
   if (is.null(varcensus)){
 
@@ -71,22 +71,27 @@ acspull <- function(varlist, filename, year = 2020, geog = "block group", varsce
     geometry = F,
     cache_table = T
   ) %>%
-    rename_all(tolower)
+    dplyr::rename_all(tolower)
 
   # browser()
   # join
   acsdata <- acsdata %>%
     dplyr::left_join(varscensus, by = c("variable" = "name"))
 
+  stateabbr <- state.abb[grep(state, state.name)]
+
   # create directory to store data if not exist
-  if (!dir.exists(paths = paste0("./data/", year, "/", geog))){
-    dir.create(paste0("./data/", year, "/", geog))
+  if (!dir.exists(paths = paste0(basedir, "/", year, "/", geog))){
+    dir.create(paste0(basedir, "/", year, "/", stateabbr, "/", geog))
   }
 
   # save data
   saveRDS(object = acsdata,
-          file = paste0("./data/",
+          file = paste0(basedir,
+                        "/",
                         year,
+                        "/",
+                        stateabbr,
                         "/",
                         geog,
                         "/",
