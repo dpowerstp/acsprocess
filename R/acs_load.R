@@ -56,7 +56,7 @@ acs_load <- function(geog, state, vars_load, year_val = 2019){
 #' @examples
 acspull <- function(varlist, filename, year = 2020, geog = "block group", varscensus = NULL, state = "Maryland", basedir = "./data"){
 
-  if (is.null(varcensus)){
+  if (is.null(varscensus)){
 
     varscensus <- tidycensus::load_variables(year = year, "acs5", cache = T)
 
