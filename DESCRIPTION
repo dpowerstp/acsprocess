@@ -23,7 +23,8 @@ Imports:
     stringr,
     tidycensus,
     tidyr,
-    tidyselect
+    tidyselect,
+    usa
 Depends: 
     R (>= 2.10),
     tidyverse

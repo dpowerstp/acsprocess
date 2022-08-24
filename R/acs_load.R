@@ -78,7 +78,11 @@ acspull <- function(varlist, filename, year = 2020, geog = "block group", varsce
   acsdata <- acsdata %>%
     dplyr::left_join(varscensus, by = c("variable" = "name"))
 
-  stateabbr <- state.abb[grep(state, state.name)]
+  # stateabbr <- state.abb[grep(state, state.name)]
+
+  stateabbr <- usa::states %>%
+    filter(name == tidystate) %>%
+    dplyr::pull(abb)
 
   # create directory to store data if not exist
   acsprocess::quickdircreate(basedir)
