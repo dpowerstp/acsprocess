@@ -13,5 +13,5 @@
 separate_label <- function(df, names_vector, label_col = "label"){
   return(df %>%
            dplyr::rename_all(tolower) %>%
-           tidyr::separate(!!sym(label_col), into = names_vector, sep = "\\!\\!",remove = FALSE))
+           tidyr::separate(!!dplyr::sym(label_col), into = names_vector, sep = "\\!\\!",remove = FALSE))
 }

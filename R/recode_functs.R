@@ -35,15 +35,15 @@ race_recode <- function(df, race_col, new_race_col = "race"){
   race_vector_order <- c("White", "Black", "Hispanic", "Asian", "Other", "Multiracial", "AIAN", "NHPI", "Overall")
 
   return_df <- df %>%
-    dplyr::mutate(!!sym(new_race_col) := race_lookup({{race_col}}))
+    dplyr::mutate(!!dplyr::sym(new_race_col) := race_lookup({{race_col}}))
 
   race_present <- return_df %>%
-    dplyr::pull(!!sym(new_race_col))
+    dplyr::pull(!!dplyr::sym(new_race_col))
 
   race_vector_order <- race_vector_order[race_vector_order %in% race_present]
 
   return_df <- return_df %>%
-    dplyr::mutate(!!sym(new_race_col) := factor(!!sym(new_race_col), race_vector_order, race_vector_order))
+    dplyr::mutate(!!dplyr::sym(new_race_col) := factor(!!dplyr::sym(new_race_col), race_vector_order, race_vector_order))
 
   if (any(is.na(return_df[[new_race_col]]))){
     stop("Error; missing race values")
@@ -374,7 +374,7 @@ health_insur_recode <- function(df, num, type){
 
     # code plans as medicaid and medicare if  includes medicaid, or code as two + plans otherwise if involves multiple plans
     multi_funct <- function(type_cov){
-      case_when(grepl("Medicaid", type_cov) ~ health_vec[7],
+      dplyr::case_when(grepl("Medicaid", type_cov) ~ health_vec[7],
                 TRUE ~ health_vec[3])
     }
 
@@ -540,9 +540,9 @@ income_recode <- function(df, income_col, new_income = "income_recode", rent_own
   }
 
   df <- df %>%
-    dplyr::mutate(!!sym(new_income) := change_income({{income_col}}))
+    dplyr::mutate(!!dplyr::sym(new_income) := change_income({{income_col}}))
 
-  factor_vector <- dplyr::pull(df, !!sym(new_income)) %>% unique
+  factor_vector <- dplyr::pull(df, !!dplyr::sym(new_income)) %>% unique
 
   factor_vector_big <- grep(">", factor_vector, value = T)
   factor_vector_small <- grep("<", factor_vector, value = T)
@@ -552,7 +552,7 @@ income_recode <- function(df, income_col, new_income = "income_recode", rent_own
                      factor_vector_big)
 
   df <- df %>%
-    mutate(!!sym(new_income) := factor(!!sym(new_income), factor_vector, factor_vector))
+    mutate(!!dplyr::sym(new_income) := factor(!!dplyr::sym(new_income), factor_vector, factor_vector))
 
   if (rent_own){
 
@@ -562,7 +562,7 @@ income_recode <- function(df, income_col, new_income = "income_recode", rent_own
     }
 
     df <- df %>%
-      dplyr::mutate(!!sym(new_income) := rent_own_replacer(!!sym(new_income)))
+      dplyr::mutate(!!dplyr::sym(new_income) := rent_own_replacer(!!dplyr::sym(new_income)))
   }
 
   df
@@ -606,7 +606,7 @@ educ_recode <- function(df, educ_col, new_educ = "educ_recode"){
   }
 
   return <- df %>%
-    dplyr::mutate(!!sym(new_educ) := factor(educ_change({{educ_col}}), vec_order, vec_order))
+    dplyr::mutate(!!dplyr::sym(new_educ) := factor(educ_change({{educ_col}}), vec_order, vec_order))
 
   if (any(return[[new_educ]] == "Missing")){
     stop("Error; returned missing education values")
@@ -647,8 +647,8 @@ comp_recode <- function(df, comp_col, int_col, new_comp = "comp_int"){
   }
 
   return <- df %>%
-    dplyr::mutate(!!sym(new_comp) := comp_change({{ comp_col }}, {{ int_col }}),
-                  !!sym(new_comp) := factor(!!sym(new_comp), comp_order, comp_order))
+    dplyr::mutate(!!dplyr::sym(new_comp) := comp_change({{ comp_col }}, {{ int_col }}),
+                  !!dplyr::sym(new_comp) := factor(!!dplyr::sym(new_comp), comp_order, comp_order))
 
   if (any(is.na(return[[new_comp]]))){
     stop("Error; missing values in return dataset")
@@ -668,7 +668,7 @@ recode_hous_ppl <- function(df, col_name = hous_ppl){
   )
 
   recode_string <- function(string){
-    case_when(
+    dplyr::case_when(
       grepl("With relatives", string) ~ factor[3],
       grepl("(no own children)|(alone)", string ~ factor[4],
             "nonrelatives"),
