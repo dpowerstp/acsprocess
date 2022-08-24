@@ -81,7 +81,7 @@ acspull <- function(varlist, filename, year = 2020, geog = "block group", varsce
   # stateabbr <- state.abb[grep(state, state.name)]
 
   stateabbr <- usa::states %>%
-    dplyr::filter(name == tidystate) %>%
+    dplyr::filter(name == state) %>%
     dplyr::pull(abb)
 
   # create directory to store data if not exist
