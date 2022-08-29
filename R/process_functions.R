@@ -2356,7 +2356,7 @@ process_tenure_vehicleown <- function(df, overall = F){
                                      "anyveh_moe") %>%
       dplyr::select(geoid, name, tothous, tothous_moe, anyvehicle, anyveh_est, anyveh_moe, pct_anyveh, pct_moe, pct_upper, pct_lower) %>%
       dplyr::distinct() %>%
-      rename(estimate = anyveh_est,
+      dplyr::rename(estimate = anyveh_est,
              moe = anyveh_moe)
 
   }

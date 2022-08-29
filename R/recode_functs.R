@@ -531,12 +531,13 @@ old_recode <- function(df, age_col){
 income_recode <- function(df, income_col, new_income = "income_recode", rent_own = F){
 
   change_income <- function(string){
-    gsub("(,000)|(,999)", "k", string) %>%
-      gsub(" to ", "-", x =  .) %>%
-      gsub("Less than ", "< ", x =  .) %>%
-      ifelse(grepl(" or more", ., ignore.case = T), paste0("> ", . ), .) %>%
-      gsub(" or more", "", x = .) %>%
-      gsub(":", "", .)
+    paste0(
+      gsub("(,000)|(,999)", "", string) %>%
+        gsub(" to \\$", "k-", x =  .) %>%
+        gsub("Less than ", "< ", x =  .) %>%
+        ifelse(grepl(" or more", ., ignore.case = T), paste0("> ", . ), .) %>%
+        gsub(" or more", "", x = .) %>%
+        gsub(":", "", .), "k")
   }
 
   df <- df %>%
