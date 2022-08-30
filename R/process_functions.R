@@ -2044,6 +2044,39 @@ process_poverty <- function(df){
 }
 
 
+#' Process households by age and poverty-status
+#'
+#' Processes tidycensus downloaded data on households by age and poverty-status, table B17017
+#'
+#' @param df Tidycensus-downloaded data on age by poverty-status, table B17017
+#'
+#' @return Processed data on age by poverty-status
+#' @export
+#'
+#' @examples
+process_hous_povage <- function(df){
+  process <- df %>%
+    acsprocess::separate_label(c(NA, NA, "povlev", "famtype", "householder", "age", "otherextra"))
+
+  other_process <- process %>%
+    dplyr::filter(grepl("Other family", householder)) %>%
+    dplyr::mutate(householder = age,
+                  age = otherextra) %>%
+    dplyr::filter(!is.na(householder)) %>%
+    dplyr::select(-otherextra)
+
+  process_final <- process %>%
+    dplyr::filter(!grepl("Other family", householder)) %>%
+    dplyr::select(-otherextra) %>%
+    rbind(other_process) %>%
+    # filter(grepl("Takoma", name)) %>%
+    acsprocess::total_col_add(c("households" = "povlev", "pov" = "famtype", "povfam" = "householder", "povfamhous" = "age"), join_col = c("name", "povlev", "famtype", "householder"))
+
+  process_final
+}
+
+
+
 # family ----
 
 #' Process family-status data
@@ -2062,6 +2095,73 @@ process_family <- function(df){
     acsprocess::total_col_add(c("housholds" = "hous_type",
                     "tot_type" = "hous_people"), join_col = c("name", "hous_type"))
 }
+
+#' Process ACS-5 year tidycensus data on household by family type
+#'
+#' Processes ACS-5 year tidycensus data on household by family type; table B11001.
+#'
+#' @param df Base-loaded dataframe on housholds by family type at a given geography, renamed to lower with tidycensus variables joined to it
+#'
+#' @return Processed dataframe on households by family type
+#' @export
+#'
+#' @examples
+process_hous_famtyp <- function(df){
+  process <- df %>%
+    dplyr::filter(grepl("B11001_", variable)) %>%
+    acsprocess::separate_label(c(NA, NA, "houstype", "famtype", "othertype"))
+
+  other_process <- process %>%
+    dplyr::filter(grepl("Other family", famtype)) %>%
+    dplyr::mutate(famtype = othertype) %>%
+    dplyr::filter(!is.na(famtype)) %>%
+    dplyr::select(-othertype)
+
+  process_final <- process %>%
+    dplyr::filter(!grepl("Other family", famtype)) %>%
+    dplyr::select(-othertype) %>%
+    rbind(other_process) %>%
+    # filter(grepl("Takoma", name)) %>%
+    acsprocess::total_col_add(c("households" = "houstype", "type_households" = "famtype"), join_col = c("name", "houstype"))
+
+  process_final
+}
+
+#' Process tidycensus ACS5 data on Family type by Income-level
+#'
+#' Processes tidycensus dowloaded data on family type by income level; table B19131
+#'
+#' @param df Tidycensus downloaded dataframe on family type by income level (table B19131), with tidycensus downloaded variables dataframe joined to it and renamed to lower
+#'
+#' @return Processed dataframe on family type by income level
+#' @export
+#'
+#' @examples
+process_famtype_incomelev <- function(df){
+
+  process <- df %>%
+    acsprocess::separate_label(names_vector = c(NA, NA, "famtype", "childstatus", "income", "other"))
+
+  other_process <- process %>%
+    dplyr::filter(grepl("Other family", famtype)) %>%
+    dplyr::mutate(famtype = childstatus,
+                  childstatus = income,
+                  income = other) %>%
+    dplyr::filter(!is.na(famtype)) %>%
+    dplyr::select(-other)
+
+  process_final <- process %>%
+    dplyr::filter(!grepl("Other family", famtype)) %>%
+    dplyr::select(-other) %>%
+    rbind(other_process) %>%
+    # filter(grepl("Takoma", name)) %>%
+    acsprocess::total_col_add(c("families" = "famtype", "type_fams" = "childstatus", "fam_child" = "income"), join_col = c("name", "famtype", "childstatus"))
+
+
+  process_final
+
+}
+
 
 #' Process poverty by family status
 #'
